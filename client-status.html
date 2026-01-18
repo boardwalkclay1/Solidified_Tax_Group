@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Status</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="st-logo">
+    <span class="st-s">S</span><span class="st-t">T</span>
+    <span class="st-dot-left"></span><span class="st-dot-top"></span>
+  </div>
+
+  <nav>
+    <a href="client-dashboard.html">Dashboard</a>
+    <a href="client-status.html">Status</a>
+  </nav>
+
+  <button class="theme-toggle" id="themeToggle">Theme</button>
+</header>
+
+<main class="page">
+
+  <section class="card">
+    <h2>Your Tax Status</h2>
+    <div id="statusBox">Loading...</div>
+  </section>
+
+</main>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const id = localStorage.getItem("clientId");
+  if (!id) return window.location.href = "client.html";
+
+  const res = await fetch(`/api/clients/${id}`);
+  const client = await res.json();
+
+  document.getElementById("statusBox").innerHTML = `
+    <p><strong>Status:</strong> ${client.status || "Not set"}</p>
+    <p><strong>Last Updated:</strong> ${client.updatedAt ? new Date(client.updatedAt).toLocaleString() : "N/A"}</p>
+  `;
+});
+</script>
+
+</body>
+</html>
