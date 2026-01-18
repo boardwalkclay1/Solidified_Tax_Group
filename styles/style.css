@@ -1,7 +1,7 @@
 /* ---------------------------------------------------------
    SOLIDIFIED TAX GROUP — FULL APP STYLE SYSTEM
    Premium Blue + Yellow Brand Identity
-   Includes REFINED ST LOGO (tighter, cinematic)
+   Includes REFINED ST LOGO (centered dots + cursive flair)
 --------------------------------------------------------- */
 
 /* ---------- ROOT VARIABLES ---------- */
@@ -49,7 +49,7 @@ body {
 }
 
 /* ---------------------------------------------------------
-   ST LOGO — refined spacing, closer dots, cinematic weight
+   ST LOGO — centered dots + dramatic cursive flair
 --------------------------------------------------------- */
 
 .st-logo {
@@ -57,52 +57,53 @@ body {
   display: inline-flex;
   align-items: flex-end;
   font-weight: 900;
-  font-size: 42px;
-  letter-spacing: -3px;
+  font-size: 48px;
+  letter-spacing: -4px;
+  font-family: "Playfair Display", "Georgia", serif;
 }
 
-/* S = Yellow, lowered + overlapping */
+/* S — lowered + overlapping + dramatic */
 .st-s {
   color: var(--accent-yellow);
-  transform: translateY(7px);
-  margin-right: -12px;
+  transform: translateY(10px);
+  margin-right: -18px;
   z-index: 2;
 }
 
-/* T = Blue */
+/* T — upright + bold */
 .st-t {
   color: var(--accent-blue);
   z-index: 1;
 }
 
-/* Black dot left of S */
+/* Black dot — centered beside S */
 .st-dot-left {
   position: absolute;
-  left: -6px;
-  bottom: 6px;
-  width: 6px;
-  height: 6px;
+  left: -12px;
+  bottom: 8px;
+  width: 8px;
+  height: 8px;
   background: #000;
   border-radius: 50%;
 }
 
-/* Yellow dot above T */
+/* Yellow dot — centered above T */
 .st-dot-top {
   position: absolute;
-  top: -4px;
-  right: -2px;
-  width: 6px;
-  height: 6px;
+  top: -6px;
+  right: -6px;
+  width: 8px;
+  height: 8px;
   background: var(--accent-yellow);
   border-radius: 50%;
 }
 
 /* Glow mode */
 .st-logo.glow .st-s {
-  text-shadow: 0 0 12px rgba(247,181,0,0.65);
+  text-shadow: 0 0 14px rgba(247,181,0,0.7);
 }
 .st-logo.glow .st-t {
-  text-shadow: 0 0 12px rgba(0,85,255,0.65);
+  text-shadow: 0 0 14px rgba(0,85,255,0.7);
 }
 
 /* ---------------------------------------------------------
@@ -112,7 +113,7 @@ body {
 .topbar {
   width: 100%;
   background: var(--card-bg);
-  padding: 18px 32px;
+  padding: 20px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -125,7 +126,7 @@ body {
 }
 
 nav a {
-  margin-left: 22px;
+  margin-left: 24px;
   text-decoration: none;
   color: var(--text);
   font-weight: 500;
@@ -134,7 +135,7 @@ nav a {
 
 nav a:hover {
   color: var(--accent-yellow);
-  text-shadow: 0 0 6px rgba(247,181,0,0.4);
+  text-shadow: 0 0 8px rgba(247,181,0,0.5);
 }
 
 /* ---------------------------------------------------------
@@ -145,7 +146,7 @@ button,
 .btn {
   background: var(--accent-blue);
   color: #fff;
-  padding: 12px 22px;
+  padding: 12px 24px;
   border: none;
   border-radius: var(--radius);
   cursor: pointer;
@@ -156,7 +157,7 @@ button,
 button:hover,
 .btn:hover {
   opacity: 0.92;
-  box-shadow: 0 0 14px rgba(0,85,255,0.4);
+  box-shadow: 0 0 16px rgba(0,85,255,0.45);
 }
 
 .btn.secondary {
@@ -165,7 +166,7 @@ button:hover,
 }
 
 .btn.secondary:hover {
-  box-shadow: 0 0 14px rgba(247,181,0,0.45);
+  box-shadow: 0 0 16px rgba(247,181,0,0.5);
 }
 
 /* ---------------------------------------------------------
@@ -174,28 +175,28 @@ button:hover,
 
 .page {
   max-width: 900px;
-  margin: 50px auto;
+  margin: 60px auto;
   padding: 0 20px;
 }
 
 .card {
   background: var(--card-bg);
-  padding: 28px;
+  padding: 30px;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
-  margin-bottom: 32px;
+  margin-bottom: 36px;
   transition: var(--transition);
 }
 
 .card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 26px rgba(0,0,0,0.12);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.14);
 }
 
 .card h2,
 .card h3 {
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 /* ---------------------------------------------------------
@@ -206,10 +207,10 @@ input,
 select,
 textarea {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  margin-bottom: 16px;
+  margin-bottom: 18px;
   background: var(--card-bg);
   color: var(--text);
   font-size: 15px;
@@ -220,7 +221,7 @@ input:focus,
 select:focus,
 textarea:focus {
   outline: 2px solid var(--accent-yellow);
-  box-shadow: 0 0 10px rgba(247,181,0,0.35);
+  box-shadow: 0 0 12px rgba(247,181,0,0.4);
 }
 
 /* ---------------------------------------------------------
@@ -230,10 +231,10 @@ textarea:focus {
 .doc-item,
 .client-item,
 .template-item {
-  padding: 14px;
+  padding: 16px;
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   background: var(--card-bg);
   transition: var(--transition);
 }
@@ -241,15 +242,15 @@ textarea:focus {
 .doc-item:hover,
 .client-item:hover,
 .template-item:hover {
-  transform: translateX(4px);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  transform: translateX(5px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.14);
 }
 
 .badge {
   display: inline-block;
   background: var(--accent-yellow);
   color: #222;
-  padding: 3px 8px;
+  padding: 4px 10px;
   border-radius: 6px;
   font-size: 12px;
   margin-top: 4px;
@@ -262,7 +263,7 @@ textarea:focus {
 .admin-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 26px;
+  gap: 28px;
 }
 
 @media (max-width: 700px) {
@@ -277,25 +278,25 @@ textarea:focus {
 
 .hero {
   text-align: center;
-  padding: 70px 20px;
+  padding: 80px 20px;
 }
 
 .hero h1 {
-  font-size: 46px;
-  margin-bottom: 14px;
+  font-size: 50px;
+  margin-bottom: 16px;
 }
 
 .hero p {
-  max-width: 540px;
+  max-width: 560px;
   margin: 0 auto;
   opacity: 0.9;
 }
 
 .hero-actions {
-  margin-top: 26px;
+  margin-top: 30px;
   display: flex;
   justify-content: center;
-  gap: 18px;
+  gap: 20px;
 }
 
 /* ---------------------------------------------------------
@@ -310,5 +311,5 @@ textarea:focus {
 }
 
 .theme-toggle:hover {
-  box-shadow: 0 0 12px rgba(247,181,0,0.4);
+  box-shadow: 0 0 14px rgba(247,181,0,0.45);
 }
