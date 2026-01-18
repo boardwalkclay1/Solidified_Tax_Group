@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Upload Documents - Solidified Tax Group</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="st-logo">
+      <span class="st-s">S</span>
+      <span class="st-t">T</span>
+      <span class="st-dot-left"></span>
+      <span class="st-dot-top"></span>
+    </div>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="client.html">Client Login</a>
+      <a href="client-dashboard.html">Dashboard</a>
+      <a href="client-upload.html">Upload</a>
+    </nav>
+
+    <button class="theme-toggle" id="themeToggle">Theme</button>
+  </header>
+
+  <main class="page">
+
+    <section class="card">
+      <h2>Upload Documents</h2>
+      <p>Select a file to upload securely to your account.</p>
+
+      <input type="file" id="uploadFile" />
+      <button id="uploadBtn" class="btn">Upload</button>
+
+      <p id="uploadStatus" style="margin-top:12px;"></p>
+    </section>
+
+  </main>
+
+  <script src="js/main.js"></script>
+  <script>
+    const API_BASE = "/api";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const clientId = localStorage.getItem("clientId");
+      if (!clientId) {
+        window.location.href = "client.html";
+        return;
+      }
+
+      document.getElementById("uploadBtn").addEventListener("click", () => {
+        uploadDocument(clientId);
+      });
+    });
+
+    async function uploadDocument(clientId) {
+      const fileInput = document.getElementById("uploadFile");
+      const statusEl = document.getElementById("uploadStatus");
+
+      if (!fileInput.files.length) {
+        statusEl.textContent = "Please choose a file.";
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        const res = await fetch(`${API_BASE}/clients/${clientId}/upload`, {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await res.json();
+
+        if (!data.success) {
+          statusEl.textContent = data.error || "Upload failed.";
+          return;
+        }
+
+        statusEl.textContent = "File uploaded successfully.";
+        fileInput.value = "";
+
+      } catch {
+        statusEl.textContent = "Unable to upload file right now.";
+      }
+    }
+  </script>
+
+</body>
+</html>
