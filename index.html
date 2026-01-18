@@ -8,8 +8,8 @@
 
 <body>
 
-  <!-- Hidden 4‑tap admin hotspot -->
-  <div id="adminHotspot" style="position:fixed; inset:0; background:transparent; z-index:200;"></div>
+  <!-- Invisible 4‑tap admin hotspot -->
+  <div id="adminHotspot" style="position:fixed; inset:0; z-index:200; background:transparent;"></div>
 
   <header class="topbar">
     <div class="st-logo">
@@ -32,7 +32,7 @@
 
   <main class="page">
 
-    <!-- HERO SECTION -->
+    <!-- HERO -->
     <section class="hero">
       <h1>Solidified Tax Group</h1>
       <p>Precision tax preparation, secure document handling, and a modern client experience.</p>
@@ -64,55 +64,45 @@
   <script src="js/main.js"></script>
 
   <script>
-    // 4‑tap admin hotspot logic
+    /* ---------------- ADMIN HOTSPOT ---------------- */
     document.addEventListener("DOMContentLoaded", () => {
-      let tapCount = 0;
-      let tapTimer = null;
+      let taps = 0;
+      let timer = null;
 
-      const hotspot = document.getElementById("adminHotspot");
-      if (hotspot) {
-        hotspot.addEventListener("click", () => {
-          tapCount++;
+      document.getElementById("adminHotspot").addEventListener("click", () => {
+        taps++;
 
-          if (tapTimer) clearTimeout(tapTimer);
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => taps = 0, 800);
 
-          tapTimer = setTimeout(() => {
-            tapCount = 0;
-          }, 800);
-
-          if (tapCount === 4) {
-            window.location.href = "admin.html";
-          }
-        });
-      }
+        if (taps === 4) window.location.href = "admin.html";
+      });
 
       loadServices();
     });
 
+    /* ---------------- SERVICES LOADER ---------------- */
     async function loadServices() {
+      const container = document.getElementById("servicesList");
+
       try {
         const res = await fetch("/api/services");
         const services = await res.json();
-        const container = document.getElementById("servicesList");
 
         if (!services.length) {
           container.textContent = "Services will be listed here.";
           return;
         }
 
-        container.innerHTML = services
-          .map(
-            s => `
+        container.innerHTML = services.map(s => `
           <div class="service-item">
             <h3>${s.name}</h3>
             <p>${s.description}</p>
           </div>
-        `
-          )
-          .join("");
-      } catch (err) {
-        const container = document.getElementById("servicesList");
-        container.textContent = "Unable to load services right now.";
+        `).join("");
+
+      } catch {
+        container.textContent = "Unable to load services.";
       }
     }
   </script>
