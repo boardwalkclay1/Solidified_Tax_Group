@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Signed Documents</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="st-logo">
+    <span class="st-s">S</span><span class="st-t">T</span>
+    <span class="st-dot-left"></span><span class="st-dot-top"></span>
+  </div>
+
+  <nav>
+    <a href="client-dashboard.html">Dashboard</a>
+    <a href="client-sign-history.html">Signed Docs</a>
+  </nav>
+
+  <button class="theme-toggle" id="themeToggle">Theme</button>
+</header>
+
+<main class="page">
+
+  <section class="card">
+    <h2>Signed Documents</h2>
+    <div id="signedList">Loading...</div>
+  </section>
+
+</main>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", loadSigned);
+
+async function loadSigned() {
+  const id = localStorage.getItem("clientId");
+  if (!id) return window.location.href = "client.html";
+
+  const res = await fetch(`/api/clients/${id}/documents`);
+  const docs = await res.json();
+
+  const signed = docs.filter(d => d.signedAt);
+
+  document.getElementById("signedList").innerHTML = signed.length
+    ? signed.map(d => `
+      <div class="doc-item">
+        <strong>${d.originalName}</strong><br>
+        Signed: ${new Date(d.signedAt).toLocaleString()}<br>
+        <a href="/uploads/${d.filename}" class="btn secondary" style="margin-top:8px;">Download</a>
+      </div>
+    `).join("")
+    : "No signed documents yet.";
+}
+</script>
+
+</body>
+</html>
