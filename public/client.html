@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Client Portal - Solidified Tax Group</title>
+  <link rel="stylesheet" href="styles/client.css" />
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">
+      <span class="logo-s">S</span><span class="logo-t">T</span>
+      <span class="logo-dot-left"></span>
+      <span class="logo-dot-top"></span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="client.html">Client Portal</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle">Toggle Theme</button>
+  </header>
+
+  <main class="page">
+    <section class="card" id="clientLoginCard">
+      <h2>Client Login</h2>
+      <label>Email</label>
+      <input type="email" id="clientEmail" placeholder="you@example.com" />
+
+      <label>Phone Number</label>
+      <input type="text" id="clientPhone" placeholder="555-123-4567" />
+
+      <label>Password</label>
+      <input type="password" id="clientPassword" />
+
+      <button id="clientLoginBtn">Log In</button>
+      <p class="helper">Use the email and phone you provided to Solidified Tax Group.</p>
+    </section>
+
+    <section class="card" id="clientPortalCard" style="display:none;">
+      <h2>Your Documents</h2>
+      <div id="clientInfo"></div>
+
+      <h3>Uploaded Documents</h3>
+      <div id="clientDocs">Loading...</div>
+
+      <h3>Upload a Document</h3>
+      <label>Type</label>
+      <select id="clientUploadType">
+        <option value="ID">ID</option>
+        <option value="SSN">Social Security Card</option>
+        <option value="Income">Income (W-2, 1099, etc.)</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label>File</label>
+      <input type="file" id="clientUploadFile" />
+
+      <button id="clientUploadBtn">Upload</button>
+      <p class="helper" id="uploadHelper"></p>
+    </section>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script src="js/client.js"></script>
+</body>
+</html>
