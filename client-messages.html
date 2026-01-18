@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Messages</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="st-logo">
+    <span class="st-s">S</span><span class="st-t">T</span>
+    <span class="st-dot-left"></span><span class="st-dot-top"></span>
+  </div>
+
+  <nav>
+    <a href="client-dashboard.html">Dashboard</a>
+    <a href="client-messages.html">Messages</a>
+  </nav>
+
+  <button class="theme-toggle" id="themeToggle">Theme</button>
+</header>
+
+<main class="page">
+
+  <section class="card">
+    <h2>Your Messages</h2>
+    <div id="msgList">Loading...</div>
+  </section>
+
+</main>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", loadMessages);
+
+async function loadMessages() {
+  const id = localStorage.getItem("clientId");
+  if (!id) return window.location.href = "client.html";
+
+  const res = await fetch(`/api/messages/client/${id}`);
+  const msgs = await res.json();
+
+  document.getElementById("msgList").innerHTML = msgs.map(m => `
+    <div class="template-item">
+      <strong>${m.title}</strong><br>
+      ${m.body}<br>
+      <small>${new Date(m.sentAt).toLocaleString()}</small>
+    </div>
+  `).join("");
+}
+</script>
+
+</body>
+</html>
