@@ -5,28 +5,37 @@
   <title>Solidified Tax Group</title>
   <link rel="stylesheet" href="styles/style.css" />
 </head>
+
 <body>
+
+  <!-- Hidden 4‑tap admin hotspot -->
+  <div id="adminHotspot"></div>
+
   <header class="topbar">
-    <div class="logo">
-      <span class="logo-s">S</span><span class="logo-t">T</span>
-      <span class="logo-dot-left"></span>
-      <span class="logo-dot-top"></span>
+    <div class="st-logo">
+      <span class="st-s">S</span>
+      <span class="st-t">T</span>
+      <span class="st-dot-left"></span>
+      <span class="st-dot-top"></span>
     </div>
+
     <nav>
       <a href="index.html">Home</a>
       <a href="client.html">Client Portal</a>
       <a href="contact.html">Contact</a>
       <a href="privacy.html">Privacy</a>
       <a href="terms.html">Terms</a>
-      <a href="admin.html">Admin</a>
     </nav>
-    <button class="theme-toggle" id="themeToggle">Toggle Theme</button>
+
+    <button class="theme-toggle" id="themeToggle">Theme</button>
   </header>
 
   <main class="page">
+
     <section class="hero">
       <h1>Solidified Tax Group</h1>
       <p>Precision tax preparation, secure document handling, and a modern client experience.</p>
+
       <div class="hero-actions">
         <a class="btn" href="client.html">Enter Client Portal</a>
         <a class="btn secondary" href="contact.html">Schedule a Consultation</a>
@@ -46,18 +55,40 @@
         <li><strong>Review & Sign:</strong> Receive documents digitally, sign online or print and upload.</li>
       </ol>
     </section>
+
   </main>
 
   <script src="js/main.js"></script>
+
+  <!-- Hidden Admin Hotspot Logic -->
   <script>
+    let tapCount = 0;
+    let tapTimer = null;
+
+    document.getElementById("adminHotspot").addEventListener("click", () => {
+      tapCount++;
+
+      if (tapTimer) clearTimeout(tapTimer);
+
+      tapTimer = setTimeout(() => {
+        tapCount = 0;
+      }, 800);
+
+      if (tapCount === 4) {
+        window.location.href = "admin.html";
+      }
+    });
+
     async function loadServices() {
       const res = await fetch("/api/services");
       const services = await res.json();
       const container = document.getElementById("servicesList");
+
       if (!services.length) {
         container.textContent = "Services will be listed here.";
         return;
       }
+
       container.innerHTML = services.map(s => `
         <div class="service-item">
           <h3>${s.name}</h3>
@@ -65,7 +96,9 @@
         </div>
       `).join("");
     }
+
     document.addEventListener("DOMContentLoaded", loadServices);
   </script>
+
 </body>
 </html>
