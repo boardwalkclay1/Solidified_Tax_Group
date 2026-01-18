@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin – Clients</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="st-logo">
+    <span class="st-s">S</span>
+    <span class="st-t">T</span>
+    <span class="st-dot-left"></span>
+    <span class="st-dot-top"></span>
+  </div>
+
+  <nav>
+    <a href="admin.html">Dashboard</a>
+    <a href="admin-clients.html">Clients</a>
+  </nav>
+
+  <button class="theme-toggle" id="themeToggle">Theme</button>
+</header>
+
+<main class="page">
+
+  <section class="card">
+    <h2>All Clients</h2>
+    <div id="clientsList">Loading...</div>
+  </section>
+
+</main>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", loadClients);
+
+async function loadClients() {
+  const token = localStorage.getItem("adminToken");
+  const res = await fetch("/api/clients", {
+    headers: { Authorization: "Bearer " + token }
+  });
+
+  const clients = await res.json();
+  const box = document.getElementById("clientsList");
+
+  box.innerHTML = clients.map(c => `
+    <div class="client-item">
+      <strong>${c.name || "Client #" + c.id}</strong><br>
+      ${c.email} • ${c.phone}<br>
+      <a href="admin-client-view.html?id=${c.id}" class="btn secondary" style="margin-top:8px;">View</a>
+    </div>
+  `).join("");
+}
+</script>
+
+</body>
+</html>
