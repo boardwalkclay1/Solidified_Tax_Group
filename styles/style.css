@@ -1,6 +1,6 @@
 /* ---------------------------------------------------------
    SOLIDIFIED TAX GROUP — GLOBAL STYLE SYSTEM
-   Clean, premium, modern, cinematic
+   Blue primary, Yellow secondary, cinematic + professional
 --------------------------------------------------------- */
 
 /* ---------- ROOT VARIABLES ---------- */
@@ -8,8 +8,10 @@
   --bg: #f7f7f7;
   --text: #222;
   --card-bg: #ffffff;
-  --accent: #0055ff;
+  --accent: #0055ff;          /* Primary blue */
   --accent-soft: #e6eeff;
+  --accent-yellow: #f7b500;   /* Signature yellow */
+  --accent-yellow-soft: #fff6dd;
   --border: #dcdcdc;
   --radius: 10px;
   --shadow: 0 4px 12px rgba(0,0,0,0.08);
@@ -22,6 +24,8 @@
   --card-bg: #1a1a1a;
   --accent: #4d8dff;
   --accent-soft: #1f2a40;
+  --accent-yellow: #ffcc4d;
+  --accent-yellow-soft: #3a2c10;
   --border: #333;
   --shadow: 0 4px 16px rgba(0,0,0,0.4);
 }
@@ -68,18 +72,18 @@ body {
 }
 
 .logo-s {
-  color: var(--accent);
+  color: var(--accent);          /* S in blue */
 }
 
 .logo-t {
-  color: var(--text);
+  color: var(--accent-yellow);   /* T in yellow */
 }
 
 .logo-dot-left,
 .logo-dot-top {
   width: 6px;
   height: 6px;
-  background: var(--accent);
+  background: var(--accent-yellow);
   border-radius: 50%;
   position: absolute;
 }
@@ -106,7 +110,7 @@ nav a {
 }
 
 nav a:hover {
-  color: var(--accent);
+  color: var(--accent-yellow);
 }
 
 /* ---------- BUTTONS ---------- */
@@ -124,12 +128,17 @@ button,
 
 button:hover,
 .btn:hover {
-  opacity: 0.85;
+  opacity: 0.9;
+  box-shadow: 0 0 12px rgba(0,85,255,0.35);
 }
 
 .btn.secondary {
-  background: var(--accent-soft);
-  color: var(--accent);
+  background: var(--accent-yellow);
+  color: #222;
+}
+
+.btn.secondary:hover {
+  box-shadow: 0 0 12px rgba(247,181,0,0.4);
 }
 
 /* ---------- PAGE LAYOUT ---------- */
@@ -171,7 +180,7 @@ textarea {
 input:focus,
 select:focus,
 textarea:focus {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--accent-yellow);
 }
 
 /* ---------- HELPER TEXT ---------- */
@@ -181,7 +190,7 @@ textarea:focus {
   margin-top: -8px;
 }
 
-/* ---------- DOCUMENT ITEMS ---------- */
+/* ---------- DOCUMENT / LIST ITEMS ---------- */
 .doc-item,
 .client-item,
 .template-item {
@@ -194,8 +203,8 @@ textarea:focus {
 
 .badge {
   display: inline-block;
-  background: var(--accent);
-  color: #fff;
+  background: var(--accent-yellow);
+  color: #222;
   padding: 2px 8px;
   border-radius: 6px;
   font-size: 12px;
@@ -220,11 +229,23 @@ textarea:focus {
   margin-bottom: 12px;
 }
 
+.hero p {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
 .hero-actions {
   margin-top: 20px;
   display: flex;
   justify-content: center;
   gap: 16px;
+}
+
+/* ---------- THEME TOGGLE ---------- */
+.theme-toggle {
+  background: var(--accent-yellow-soft);
+  color: var(--text);
+  border: 1px solid var(--accent-yellow);
 }
 
 /* ---------- RESPONSIVE ---------- */
