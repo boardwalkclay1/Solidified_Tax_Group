@@ -45,11 +45,13 @@
 
       <div class="admin-grid">
 
+        <!-- CLIENTS -->
         <div class="card">
           <h3>Clients</h3>
           <div id="clientsList">Loading...</div>
         </div>
 
+        <!-- TEMPLATES -->
         <div class="card">
           <h3>Templates</h3>
           <div id="templatesList">Loading...</div>
@@ -61,6 +63,24 @@
 
       </div>
 
+      <!-- SERVICES MANAGER -->
+      <div class="card">
+        <h3>Services Manager</h3>
+
+        <div id="servicesAdminList" style="margin-bottom:16px;">Loading services...</div>
+
+        <h4>Add New Service</h4>
+
+        <label>Service Name</label>
+        <input type="text" id="newServiceName" placeholder="e.g. Individual Tax Preparation & Filing">
+
+        <label>Description</label>
+        <textarea id="newServiceDescription" rows="4" placeholder="Detailed description of the service..."></textarea>
+
+        <button id="addServiceBtn" class="btn" style="margin-top:10px;">Add Service</button>
+      </div>
+
+      <!-- ADD ADMIN -->
       <div class="card">
         <h3>Add New Admin</h3>
 
