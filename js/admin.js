@@ -34,6 +34,7 @@ async function adminLogin() {
 
   loadClients();
   loadTemplates();
+  loadAdminServices(); // NEW
 }
 
 /* ---------------------------------------------------------
@@ -157,6 +158,89 @@ async function addAdmin() {
 }
 
 /* ---------------------------------------------------------
+   SERVICES MANAGER — LOAD SERVICES
+--------------------------------------------------------- */
+async function loadAdminServices() {
+  const res = await fetch("/api/services");
+  const services = await res.json();
+  const container = document.getElementById("servicesAdminList");
+
+  if (!services.length) {
+    container.textContent = "No services defined yet.";
+    return;
+  }
+
+  container.innerHTML = services
+    .map(
+      s => `
+      <div class="template-item">
+        <strong>${s.name}</strong><br>
+        <small>${s.description}</small><br>
+        <button class="btn secondary" style="margin-top:6px;" onclick="deleteService(${s.id})">Delete</button>
+      </div>
+    `
+    )
+    .join("");
+}
+
+/* ---------------------------------------------------------
+   ADD SERVICE
+--------------------------------------------------------- */
+async function addService() {
+  const name = document.getElementById("newServiceName").value.trim();
+  const description = document.getElementById("newServiceDescription").value.trim();
+
+  if (!name || !description) {
+    alert("Enter both a name and a description.");
+    return;
+  }
+
+  const res = await fetch("/api/services/add", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + adminToken
+    },
+    body: JSON.stringify({ name, description })
+  });
+
+  const data = await res.json();
+
+  if (!data.success) {
+    alert(data.error || "Failed to add service.");
+    return;
+  }
+
+  document.getElementById("newServiceName").value = "";
+  document.getElementById("newServiceDescription").value = "";
+
+  loadAdminServices();
+}
+
+/* ---------------------------------------------------------
+   DELETE SERVICE (SUPERADMIN ONLY)
+--------------------------------------------------------- */
+async function deleteService(id) {
+  if (!confirm("Delete this service?")) return;
+
+  const res = await fetch(`/api/services/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: "Bearer " + adminToken
+    }
+  });
+
+  const data = await res.json();
+
+  if (!data.success) {
+    alert(data.error || "Failed to delete service.");
+    return;
+  }
+
+  loadAdminServices();
+}
+
+/* ---------------------------------------------------------
    EVENT LISTENERS
 --------------------------------------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
@@ -168,4 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const addAdminBtn = document.getElementById("addAdminBtn");
   if (addAdminBtn) addAdminBtn.addEventListener("click", addAdmin);
+
+  const addServiceBtn = document.getElementById("addServiceBtn");
+  if (addServiceBtn) addServiceBtn.addEventListener("click", addService);
 });
