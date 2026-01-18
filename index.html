@@ -9,7 +9,7 @@
 <body>
 
   <!-- Hidden 4‑tap admin hotspot -->
-  <div id="adminHotspot"></div>
+  <div id="adminHotspot" style="position:fixed; inset:0; background:transparent; z-index:200;"></div>
 
   <header class="topbar">
     <div class="st-logo">
@@ -63,44 +63,58 @@
 
   <script src="js/main.js"></script>
 
-  <!-- Hidden Admin Hotspot Logic -->
   <script>
-    let tapCount = 0;
-    let tapTimer = null;
+    // 4‑tap admin hotspot logic
+    document.addEventListener("DOMContentLoaded", () => {
+      let tapCount = 0;
+      let tapTimer = null;
 
-    document.getElementById("adminHotspot").addEventListener("click", () => {
-      tapCount++;
+      const hotspot = document.getElementById("adminHotspot");
+      if (hotspot) {
+        hotspot.addEventListener("click", () => {
+          tapCount++;
 
-      if (tapTimer) clearTimeout(tapTimer);
+          if (tapTimer) clearTimeout(tapTimer);
 
-      tapTimer = setTimeout(() => {
-        tapCount = 0;
-      }, 800);
+          tapTimer = setTimeout(() => {
+            tapCount = 0;
+          }, 800);
 
-      if (tapCount === 4) {
-        window.location.href = "admin.html";
+          if (tapCount === 4) {
+            window.location.href = "admin.html";
+          }
+        });
       }
+
+      loadServices();
     });
 
     async function loadServices() {
-      const res = await fetch("/api/services");
-      const services = await res.json();
-      const container = document.getElementById("servicesList");
+      try {
+        const res = await fetch("/api/services");
+        const services = await res.json();
+        const container = document.getElementById("servicesList");
 
-      if (!services.length) {
-        container.textContent = "Services will be listed here.";
-        return;
+        if (!services.length) {
+          container.textContent = "Services will be listed here.";
+          return;
+        }
+
+        container.innerHTML = services
+          .map(
+            s => `
+          <div class="service-item">
+            <h3>${s.name}</h3>
+            <p>${s.description}</p>
+          </div>
+        `
+          )
+          .join("");
+      } catch (err) {
+        const container = document.getElementById("servicesList");
+        container.textContent = "Unable to load services right now.";
       }
-
-      container.innerHTML = services.map(s => `
-        <div class="service-item">
-          <h3>${s.name}</h3>
-          <p>${s.description}</p>
-        </div>
-      `).join("");
     }
-
-    document.addEventListener("DOMContentLoaded", loadServices);
   </script>
 
 </body>
