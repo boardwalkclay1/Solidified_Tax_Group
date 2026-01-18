@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Verify Identity</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+
+<body>
+
+<main class="page">
+
+  <section class="card">
+    <h2>Verify Your Identity</h2>
+    <p>Enter your password to continue.</p>
+
+    <input id="verifyPass" type="password" placeholder="Password">
+    <button id="verifyBtn" class="btn">Verify</button>
+
+    <p id="verifyStatus" style="margin-top:12px;"></p>
+  </section>
+
+</main>
+
+<script src="js/main.js"></script>
+<script>
+document.getElementById("verifyBtn").onclick = async () => {
+  const pass = document.getElementById("verifyPass").value.trim();
+  const id = localStorage.getItem("clientId");
+
+  const res = await fetch("/api/clients/verify", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ id, pass })
+  });
+
+  const data = await res.json();
+  document.getElementById("verifyStatus").textContent =
+    data.success ? "Verified." : data.error;
+};
+</script>
+
+</body>
+</html>
