@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "name": "Jordan Smith",
+    "email": "jordan@example.com",
+    "phone": "555-123-4567",
+    "passwordHash": "",
+    "ssnHash": "",
+    "driverLicenseHash": "",
+    "status": "In Progress",
+    "year": 2024,
+    "services": ["individual-return"],
+    "authorized": true
+  }
+]
