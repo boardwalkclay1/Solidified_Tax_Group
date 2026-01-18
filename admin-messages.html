@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin – Messages</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="st-logo">
+    <span class="st-s">S</span><span class="st-t">T</span>
+    <span class="st-dot-left"></span><span class="st-dot-top"></span>
+  </div>
+
+  <nav>
+    <a href="admin.html">Dashboard</a>
+    <a href="admin-messages.html">Messages</a>
+  </nav>
+
+  <button class="theme-toggle" id="themeToggle">Theme</button>
+</header>
+
+<main class="page">
+
+  <section class="card">
+    <h2>Send Message to Client</h2>
+
+    <input id="msgClient" placeholder="Client Email">
+    <input id="msgTitle" placeholder="Title">
+    <textarea id="msgBody" placeholder="Message"></textarea>
+
+    <button id="sendMsgBtn" class="btn">Send</button>
+    <p id="msgStatus" style="margin-top:12px;"></p>
+  </section>
+
+  <section class="card">
+    <h3>All Messages</h3>
+    <div id="allMsgs">Loading...</div>
+  </section>
+
+</main>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  loadAllMessages();
+  document.getElementById("sendMsgBtn").onclick = sendMessage;
+});
+
+async function sendMessage() {
+  const email = document.getElementById("msgClient").value.trim();
+  const title = document.getElementById("msgTitle").value.trim();
+  const body = document.getElementById("msgBody").value.trim();
+
+  const res = await fetch("/api/messages/send", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ email, title, body })
+  });
+
+  const data = await res.json();
+  document.getElementById("msgStatus").textContent =
+    data.success ? "Message sent." : data.error;
+
+  if (data.success) loadAllMessages();
+}
+
+async function loadAllMessages() {
+  const res = await fetch("/api/messages");
+  const msgs = await res.json();
+
+  document.getElementById("allMsgs").innerHTML = msgs.map(m => `
+    <div class="template-item">
+      <strong>${m.title}</strong><br>
+      To: ${m.email}<br>
+      ${m.body}<br>
+      <small>${new Date(m.sentAt).toLocaleString()}</small>
+    </div>
+  `).join("");
+}
+</script>
+
+</body>
+</html>
