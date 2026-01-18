@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contact - Solidified Tax Group</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">
+      <span class="logo-s">S</span><span class="logo-t">T</span>
+      <span class="logo-dot-left"></span>
+      <span class="logo-dot-top"></span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="client.html">Client Portal</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle">Toggle Theme</button>
+  </header>
+
+  <main class="page">
+    <section class="card">
+      <h2>Contact Solidified Tax Group</h2>
+      <label>Name</label>
+      <input type="text" id="contactName" />
+
+      <label>Email</label>
+      <input type="email" id="contactEmail" />
+
+      <label>Message</label>
+      <textarea id="contactMessage" rows="5"></textarea>
+
+      <button id="contactSubmit">Send Message</button>
+      <p id="contactStatus"></p>
+    </section>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script src="js/contact.js"></script>
+</body>
+</html>
