@@ -1,104 +1,93 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Admin Dashboard - Solidified Tax Group</title>
-  <link rel="stylesheet" href="styles/style.css" />
-</head>
+<main class="dashboard-layout">
 
-<body>
+  <!-- SIDEBAR -->
+  <aside class="sidebar admin-sidebar">
+    <h3 class="sidebar-title">Admin Panel</h3>
+    <a href="admin-clients.html">👥 Clients</a>
+    <a href="admin-documents.html">📄 Documents</a>
+    <a href="admin-services.html">🛠️ Services</a>
+    <a href="admin-templates.html">📑 Templates</a>
+    <a href="admin-careers.html">📝 Applicants</a>
+    <a href="admin-status.html">📊 Status Updates</a>
+    <a href="admin-tax-year.html">📅 Tax Year</a>
+    <a href="admin-messages.html">💬 Messages</a>
+    <a href="admin-settings.html">⚙️ Settings</a>
+    <a href="#" id="adminLogout">🚪 Logout</a>
+  </aside>
 
-  <header class="topbar">
-    <div class="st-logo">
-      <span class="st-s">S</span>
-      <span class="st-t">T</span>
-      <span class="st-dot-left"></span>
-      <span class="st-dot-top"></span>
+  <!-- MAIN CONTENT -->
+  <section class="dashboard-main">
+
+    <h2>Admin Dashboard</h2>
+
+    <!-- QUICK STATS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3 id="statClients">0</h3>
+        <p>Clients</p>
+      </div>
+
+      <div class="stat-card">
+        <h3 id="statDocs">0</h3>
+        <p>Documents</p>
+      </div>
+
+      <div class="stat-card">
+        <h3 id="statApps">0</h3>
+        <p>Applicants</p>
+      </div>
     </div>
 
-    <nav>
-      <a href="index.html">Home</a>
-    </nav>
+    <!-- ACTION GRID -->
+    <div class="action-grid">
 
-    <button class="theme-toggle" id="themeToggle">Theme</button>
-  </header>
+      <a class="action-item" href="admin-clients.html">
+        <span>👥</span>
+        <h4>Manage Clients</h4>
+      </a>
 
-  <main class="page">
+      <a class="action-item" href="admin-documents.html">
+        <span>📄</span>
+        <h4>All Documents</h4>
+      </a>
 
-    <!-- LOGIN CARD -->
-    <section class="card" id="adminLoginCard">
-      <h2>Admin Login</h2>
+      <a class="action-item" href="admin-services.html">
+        <span>🛠️</span>
+        <h4>Services</h4>
+      </a>
 
-      <label>Email</label>
-      <input type="email" id="adminEmail" placeholder="admin@example.com">
+      <a class="action-item" href="admin-templates.html">
+        <span>📑</span>
+        <h4>Templates</h4>
+      </a>
 
-      <label>Password</label>
-      <input type="password" id="adminPassword">
+      <a class="action-item" href="admin-careers.html">
+        <span>📝</span>
+        <h4>Applicants</h4>
+      </a>
 
-      <button id="adminLoginBtn">Log In</button>
-    </section>
+      <a class="action-item" href="admin-status.html">
+        <span>📊</span>
+        <h4>Status Updates</h4>
+      </a>
 
-    <!-- DASHBOARD -->
-    <section class="card" id="adminDashboard" style="display:none;">
-      <h2>Admin Dashboard</h2>
-      <p id="adminRole"></p>
+      <a class="action-item" href="admin-tax-year.html">
+        <span>📅</span>
+        <h4>Tax Year</h4>
+      </a>
 
-      <div class="admin-grid">
+      <a class="action-item" href="admin-messages.html">
+        <span>💬</span>
+        <h4>Messages</h4>
+      </a>
 
-        <!-- CLIENTS -->
-        <div class="card">
-          <h3>Clients</h3>
-          <div id="clientsList">Loading...</div>
-        </div>
+      <a class="action-item" href="admin-settings.html">
+        <span>⚙️</span>
+        <h4>Settings</h4>
+      </a>
 
-        <!-- TEMPLATES -->
-        <div class="card">
-          <h3>Templates</h3>
-          <div id="templatesList">Loading...</div>
+    </div>
 
-          <h4>Upload Template</h4>
-          <input type="file" id="templateFile">
-          <button id="uploadTemplateBtn">Upload</button>
-        </div>
+  </section>
 
-      </div>
-
-      <!-- SERVICES MANAGER -->
-      <div class="card">
-        <h3>Services Manager</h3>
-
-        <div id="servicesAdminList" style="margin-bottom:16px;">Loading services...</div>
-
-        <h4>Add New Service</h4>
-
-        <label>Service Name</label>
-        <input type="text" id="newServiceName" placeholder="e.g. Individual Tax Preparation & Filing">
-
-        <label>Description</label>
-        <textarea id="newServiceDescription" rows="4" placeholder="Detailed description of the service..."></textarea>
-
-        <button id="addServiceBtn" class="btn" style="margin-top:10px;">Add Service</button>
-      </div>
-
-      <!-- ADD ADMIN -->
-      <div class="card">
-        <h3>Add New Admin</h3>
-
-        <label>Email</label>
-        <input type="email" id="newAdminEmail">
-
-        <label>Temporary Password</label>
-        <input type="password" id="newAdminPassword">
-
-        <button id="addAdminBtn">Add Admin</button>
-      </div>
-
-    </section>
-
-  </main>
-
-  <script src="js/admin.js"></script>
-  <script src="js/main.js"></script>
-
-</body>
-</html>
+</main>
