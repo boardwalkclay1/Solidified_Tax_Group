@@ -128,3 +128,61 @@ app.get("/api/clients/:id", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Solidified Tax Group running on http://localhost:${PORT}`);
 });
+// create or update client (admin only)
+app.post("/api/admin/clients/save", requireAdmin, async (req, res) => {
+  const {
+    id,
+    name,
+    email,
+    phone,
+    password,
+    ssn,
+    driverLicense,
+    status,
+    year,
+    services,
+    authorized
+  } = req.body;
+
+  const clients = (await readJson("clients.json")) || [];
+  let client;
+
+  if (id) {
+    const idx = clients.findIndex(c => c.id === id);
+    if (idx === -1) return res.status(404).json({ error: "Client not found" });
+    client = clients[idx];
+
+    if (name) client.name = name;
+    if (email) client.email = email;
+    if (phone) client.phone = phone;
+    if (typeof authorized === "boolean") client.authorized = authorized;
+    if (status) client.status = status;
+    if (year) client.year = year;
+    if (services) client.services = services;
+
+    if (password) client.passwordHash = await bcrypt.hash(password, 10);
+    if (ssn) client.ssnHash = await bcrypt.hash(ssn, 10);
+    if (driverLicense) client.driverLicenseHash = await bcrypt.hash(driverLicense, 10);
+
+    clients[idx] = client;
+  } else {
+    const newId = clients.length ? Math.max(...clients.map(c => c.id)) + 1 : 1;
+    client = {
+      id: newId,
+      name,
+      email,
+      phone,
+      passwordHash: password ? await bcrypt.hash(password, 10) : "",
+      ssnHash: ssn ? await bcrypt.hash(ssn, 10) : "",
+      driverLicenseHash: driverLicense ? await bcrypt.hash(driverLicense, 10) : "",
+      status: status || "New",
+      year: year || new Date().getFullYear(),
+      services: services || [],
+      authorized: typeof authorized === "boolean" ? authorized : true
+    };
+    clients.push(client);
+  }
+
+  await writeJson("clients.json", clients);
+  res.json({ success: true, client });
+});
