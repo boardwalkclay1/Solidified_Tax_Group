@@ -1,8 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard - Solidified Tax Group</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="st-logo">
+    <span class="st-s">S</span>
+    <span class="st-t">T</span>
+    <span class="st-dot-left"></span>
+    <span class="st-dot-top"></span>
+  </div>
+</header>
+
 <main class="dashboard-layout">
 
   <!-- SIDEBAR -->
   <aside class="sidebar admin-sidebar">
     <h3 class="sidebar-title">Admin Panel</h3>
+
+    <a href="admin.html">🏠 Dashboard</a>
     <a href="admin-clients.html">👥 Clients</a>
     <a href="admin-documents.html">📄 Documents</a>
     <a href="admin-services.html">🛠️ Services</a>
@@ -91,3 +112,14 @@
   </section>
 
 </main>
+
+<script>
+  // Logout logic
+  document.getElementById("adminLogout").onclick = () => {
+    localStorage.removeItem("adminToken");
+    window.location.href = "index.html";
+  };
+</script>
+
+</body>
+</html>
