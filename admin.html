@@ -3,91 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <title>Admin Dashboard - Solidified Tax Group</title>
-  <link rel="stylesheet" href="styles/admin.css" />
   <link rel="stylesheet" href="styles/style.css" />
 </head>
+
 <body>
+
   <header class="topbar">
-    <div class="logo">
-      <span class="logo-s">S</span><span class="logo-t">T</span>
-      <span class="logo-dot-left"></span>
-      <span class="logo-dot-top"></span>
+    <div class="st-logo">
+      <span class="st-s">S</span>
+      <span class="st-t">T</span>
+      <span class="st-dot-left"></span>
+      <span class="st-dot-top"></span>
     </div>
+
     <nav>
       <a href="index.html">Home</a>
-      <a href="admin.html">Admin</a>
     </nav>
-    <button class="theme-toggle" id="themeToggle">Toggle Theme</button>
+
+    <button class="theme-toggle" id="themeToggle">Theme</button>
   </header>
 
   <main class="page">
+
+    <!-- LOGIN CARD -->
     <section class="card" id="adminLoginCard">
       <h2>Admin Login</h2>
+
       <label>Email</label>
-      <input type="email" id="adminEmail" placeholder="admin@example.com" />
+      <input type="email" id="adminEmail" placeholder="admin@example.com">
 
       <label>Password</label>
-      <input type="password" id="adminPassword" />
+      <input type="password" id="adminPassword">
 
       <button id="adminLoginBtn">Log In</button>
-      <p class="helper">Use your Solidified Tax Group admin credentials.</p>
     </section>
 
+    <!-- DASHBOARD -->
     <section class="card" id="adminDashboard" style="display:none;">
       <h2>Admin Dashboard</h2>
       <p id="adminRole"></p>
 
       <div class="admin-grid">
+
         <div class="card">
           <h3>Clients</h3>
-          <input type="text" id="clientSearch" placeholder="Search clients..." />
           <div id="clientsList">Loading...</div>
         </div>
 
         <div class="card">
           <h3>Templates</h3>
-          <input type="text" id="templateSearch" placeholder="Search templates..." />
           <div id="templatesList">Loading...</div>
 
-          <h4>Upload New Template</h4>
-          <input type="file" id="templateFile" />
-          <button id="uploadTemplateBtn">Upload Template</button>
+          <h4>Upload Template</h4>
+          <input type="file" id="templateFile">
+          <button id="uploadTemplateBtn">Upload</button>
         </div>
+
       </div>
 
       <div class="card">
-        <h3>Scan & Upload Document to Client</h3>
-        <label>Select Client</label>
-        <select id="scanClientSelect"></select>
+        <h3>Add New Admin</h3>
 
-        <label style="display:block;margin-top:8px;">Scan Document (Camera)</label>
-        <input type="file" id="scanFileInput" accept="image/*,application/pdf" capture="environment" />
+        <label>Email</label>
+        <input type="email" id="newAdminEmail">
 
-        <label style="display:block;margin-top:8px;">Type</label>
-        <select id="scanType">
-          <option value="Other">Other</option>
-          <option value="ID">ID</option>
-          <option value="SSN">SSN</option>
-          <option value="Income">Income</option>
-        </select>
+        <label>Temporary Password</label>
+        <input type="password" id="newAdminPassword">
 
-        <button style="margin-top:8px;" id="uploadScanBtn">Upload Scan</button>
+        <button id="addAdminBtn">Add Admin</button>
       </div>
 
-      <div class="card">
-        <h3>Send Document for Signature</h3>
-        <label>Client Email</label>
-        <input type="email" id="signClientEmail" placeholder="client@example.com" />
-
-        <label>Document ID</label>
-        <input type="number" id="signDocId" placeholder="Document ID" />
-
-        <button id="sendForSignatureBtn">Send for Signature</button>
-      </div>
     </section>
+
   </main>
 
-  <script src="js/main.js"></script>
   <script src="js/admin.js"></script>
+  <script src="js/main.js"></script>
+
 </body>
 </html>
