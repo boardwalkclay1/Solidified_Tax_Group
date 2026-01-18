@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin – Client View</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="st-logo">
+    <span class="st-s">S</span>
+    <span class="st-t">T</span>
+    <span class="st-dot-left"></span>
+    <span class="st-dot-top"></span>
+  </div>
+
+  <nav>
+    <a href="admin.html">Dashboard</a>
+    <a href="admin-clients.html">Clients</a>
+  </nav>
+
+  <button class="theme-toggle" id="themeToggle">Theme</button>
+</header>
+
+<main class="page">
+
+  <section class="card">
+    <h2>Client Details</h2>
+    <div id="clientInfo">Loading...</div>
+  </section>
+
+  <section class="card">
+    <h3>Documents</h3>
+    <div id="clientDocs">Loading...</div>
+  </section>
+
+</main>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  const token = localStorage.getItem("adminToken");
+
+  const res = await fetch(`/api/clients/${id}`);
+  const client = await res.json();
+
+  document.getElementById("clientInfo").innerHTML = `
+    <p><strong>Name:</strong> ${client.name || "N/A"}</p>
+    <p><strong>Email:</strong> ${client.email}</p>
+    <p><strong>Phone:</strong> ${client.phone}</p>
+    <p><strong>Status:</strong> ${client.status || "N/A"}</p>
+    <p><strong>Year:</strong> ${client.year || "N/A"}</p>
+  `;
+
+  const docsRes = await fetch(`/api/clients/${id}/documents`);
+  const docs = await docsRes.json();
+
+  document.getElementById("clientDocs").innerHTML = docs.map(d => `
+    <div class="doc-item">
+      <strong>${d.originalName}</strong><br>
+      Uploaded: ${new Date(d.uploadedAt).toLocaleString()}<br>
+      ${d.signedAt ? `<span class="badge">Signed</span>` : ""}
+      <br><a href="/uploads/${d.filename}" class="btn secondary" style="margin-top:8px;">Download</a>
+    </div>
+  `).join("");
+});
+</script>
+
+</body>
+</html>
