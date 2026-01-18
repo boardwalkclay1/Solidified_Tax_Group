@@ -1,36 +1,33 @@
 /* ---------------------------------------------------------
-   SOLIDIFIED TAX GROUP — GLOBAL STYLE SYSTEM
-   Blue primary, Yellow secondary, cinematic + professional
+   SOLIDIFIED TAX GROUP — FULL APP STYLE SYSTEM
+   Blue + Yellow brand identity
 --------------------------------------------------------- */
 
-/* ---------- ROOT VARIABLES ---------- */
 :root {
   --bg: #f7f7f7;
   --text: #222;
   --card-bg: #ffffff;
-  --accent: #0055ff;          /* Primary blue */
-  --accent-soft: #e6eeff;
-  --accent-yellow: #f7b500;   /* Signature yellow */
+  --accent-blue: #0055ff;
+  --accent-yellow: #f7b500;
+  --accent-blue-soft: #e6eeff;
   --accent-yellow-soft: #fff6dd;
   --border: #dcdcdc;
-  --radius: 10px;
-  --shadow: 0 4px 12px rgba(0,0,0,0.08);
+  --radius: 12px;
+  --shadow: 0 4px 14px rgba(0,0,0,0.08);
 }
 
-/* DARK MODE */
 :root.dark {
   --bg: #0f0f0f;
   --text: #eaeaea;
   --card-bg: #1a1a1a;
-  --accent: #4d8dff;
-  --accent-soft: #1f2a40;
+  --accent-blue: #4d8dff;
   --accent-yellow: #ffcc4d;
+  --accent-blue-soft: #1f2a40;
   --accent-yellow-soft: #3a2c10;
   --border: #333;
-  --shadow: 0 4px 16px rgba(0,0,0,0.4);
+  --shadow: 0 4px 18px rgba(0,0,0,0.4);
 }
 
-/* ---------- GLOBAL RESET ---------- */
 * {
   margin: 0;
   padding: 0;
@@ -45,7 +42,6 @@ body {
   padding-bottom: 60px;
 }
 
-/* ---------- TOPBAR ---------- */
 .topbar {
   width: 100%;
   background: var(--card-bg);
@@ -60,47 +56,6 @@ body {
   z-index: 100;
 }
 
-/* ---------- LOGO ---------- */
-.logo {
-  position: relative;
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: -1px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.logo-s {
-  color: var(--accent);          /* S in blue */
-}
-
-.logo-t {
-  color: var(--accent-yellow);   /* T in yellow */
-}
-
-.logo-dot-left,
-.logo-dot-top {
-  width: 6px;
-  height: 6px;
-  background: var(--accent-yellow);
-  border-radius: 50%;
-  position: absolute;
-}
-
-.logo-dot-left {
-  left: -8px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.logo-dot-top {
-  top: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* ---------- NAV ---------- */
 nav a {
   margin-left: 20px;
   text-decoration: none;
@@ -113,10 +68,9 @@ nav a:hover {
   color: var(--accent-yellow);
 }
 
-/* ---------- BUTTONS ---------- */
 button,
 .btn {
-  background: var(--accent);
+  background: var(--accent-blue);
   color: #fff;
   padding: 10px 18px;
   border: none;
@@ -137,18 +91,12 @@ button:hover,
   color: #222;
 }
 
-.btn.secondary:hover {
-  box-shadow: 0 0 12px rgba(247,181,0,0.4);
-}
-
-/* ---------- PAGE LAYOUT ---------- */
 .page {
   max-width: 900px;
   margin: 40px auto;
   padding: 0 20px;
 }
 
-/* ---------- CARDS ---------- */
 .card {
   background: var(--card-bg);
   padding: 24px;
@@ -158,12 +106,6 @@ button:hover,
   margin-bottom: 30px;
 }
 
-.card h2,
-.card h3 {
-  margin-bottom: 12px;
-}
-
-/* ---------- INPUTS ---------- */
 input,
 select,
 textarea {
@@ -183,72 +125,12 @@ textarea:focus {
   outline: 2px solid var(--accent-yellow);
 }
 
-/* ---------- HELPER TEXT ---------- */
-.helper {
-  font-size: 13px;
-  opacity: 0.7;
-  margin-top: -8px;
-}
-
-/* ---------- DOCUMENT / LIST ITEMS ---------- */
-.doc-item,
-.client-item,
-.template-item {
-  padding: 12px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  margin-bottom: 10px;
-  background: var(--card-bg);
-}
-
-.badge {
-  display: inline-block;
-  background: var(--accent-yellow);
-  color: #222;
-  padding: 2px 8px;
-  border-radius: 6px;
-  font-size: 12px;
-  margin-top: 4px;
-}
-
-/* ---------- ADMIN GRID ---------- */
 .admin-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
 }
 
-/* ---------- HERO SECTION ---------- */
-.hero {
-  text-align: center;
-  padding: 60px 20px;
-}
-
-.hero h1 {
-  font-size: 42px;
-  margin-bottom: 12px;
-}
-
-.hero p {
-  max-width: 520px;
-  margin: 0 auto;
-}
-
-.hero-actions {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-}
-
-/* ---------- THEME TOGGLE ---------- */
-.theme-toggle {
-  background: var(--accent-yellow-soft);
-  color: var(--text);
-  border: 1px solid var(--accent-yellow);
-}
-
-/* ---------- RESPONSIVE ---------- */
 @media (max-width: 700px) {
   .admin-grid {
     grid-template-columns: 1fr;
