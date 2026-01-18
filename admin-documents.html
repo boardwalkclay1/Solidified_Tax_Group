@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin – All Documents</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="st-logo">
+    <span class="st-s">S</span>
+    <span class="st-t">T</span>
+    <span class="st-dot-left"></span>
+    <span class="st-dot-top"></span>
+  </div>
+
+  <nav>
+    <a href="admin.html">Dashboard</a>
+    <a href="admin-documents.html">Documents</a>
+  </nav>
+
+  <button class="theme-toggle" id="themeToggle">Theme</button>
+</header>
+
+<main class="page">
+
+  <section class="card">
+    <h2>All Documents</h2>
+    <div id="docsList">Loading...</div>
+  </section>
+
+</main>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", loadDocs);
+
+async function loadDocs() {
+  const res = await fetch("/api/clients");
+  const clients = await res.json();
+
+  let allDocs = [];
+
+  for (const c of clients) {
+    const d = await fetch(`/api/clients/${c.id}/documents`);
+    const docs = await d.json();
+    docs.forEach(doc => allDocs.push({ ...doc, client: c }));
+  }
+
+  const box = document.getElementById("docsList");
+
+  box.innerHTML = allDocs.map(d => `
+    <div class="doc-item">
+      <strong>${d.originalName}</strong><br>
+      Client: ${d.client.name || d.client.email}<br>
+      Uploaded: ${new Date(d.uploadedAt).toLocaleString()}<br>
+      <a href="/uploads/${d.filename}" class="btn secondary" style="margin-top:8px;">Download</a>
+    </div>
+  `).join("");
+}
+</script>
+
+</body>
+</html>
