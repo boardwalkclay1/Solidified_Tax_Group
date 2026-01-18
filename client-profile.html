@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Profile - Solidified Tax Group</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="st-logo">
+    <span class="st-s">S</span>
+    <span class="st-t">T</span>
+    <span class="st-dot-left"></span>
+    <span class="st-dot-top"></span>
+  </div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="client-dashboard.html">Dashboard</a>
+    <a href="client-profile.html">Profile</a>
+  </nav>
+
+  <button class="theme-toggle" id="themeToggle">Theme</button>
+</header>
+
+<main class="page">
+
+  <section class="card">
+    <h2>Your Profile</h2>
+    <div id="profileBox">Loading...</div>
+  </section>
+
+</main>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const id = localStorage.getItem("clientId");
+  if (!id) return window.location.href = "client.html";
+
+  const res = await fetch(`/api/clients/${id}`);
+  const client = await res.json();
+
+  const box = document.getElementById("profileBox");
+  box.innerHTML = `
+    <p><strong>Name:</strong> ${client.name || "N/A"}</p>
+    <p><strong>Email:</strong> ${client.email}</p>
+    <p><strong>Phone:</strong> ${client.phone}</p>
+    <p><strong>Status:</strong> ${client.status || "N/A"}</p>
+    <p><strong>Year:</strong> ${client.year || "N/A"}</p>
+  `;
+});
+</script>
+
+</body>
+</html>
