@@ -5,39 +5,110 @@
   <title>Contact - Solidified Tax Group</title>
   <link rel="stylesheet" href="styles/style.css" />
 </head>
+
 <body>
+
+  <!-- Hidden 4‑tap admin hotspot -->
+  <div id="adminHotspot"></div>
+
   <header class="topbar">
-    <div class="logo">
-      <span class="logo-s">S</span><span class="logo-t">T</span>
-      <span class="logo-dot-left"></span>
-      <span class="logo-dot-top"></span>
+    <div class="st-logo">
+      <span class="st-s">S</span>
+      <span class="st-t">T</span>
+      <span class="st-dot-left"></span>
+      <span class="st-dot-top"></span>
     </div>
+
     <nav>
       <a href="index.html">Home</a>
       <a href="client.html">Client Portal</a>
       <a href="contact.html">Contact</a>
     </nav>
-    <button class="theme-toggle" id="themeToggle">Toggle Theme</button>
+
+    <button class="theme-toggle" id="themeToggle">Theme</button>
   </header>
 
   <main class="page">
+
     <section class="card">
       <h2>Contact Solidified Tax Group</h2>
+
       <label>Name</label>
-      <input type="text" id="contactName" />
+      <input type="text" id="contactName" placeholder="Your name">
 
       <label>Email</label>
-      <input type="email" id="contactEmail" />
+      <input type="email" id="contactEmail" placeholder="you@example.com">
 
       <label>Message</label>
-      <textarea id="contactMessage" rows="5"></textarea>
+      <textarea id="contactMessage" rows="5" placeholder="How can we help you?"></textarea>
 
-      <button id="contactSubmit">Send Message</button>
-      <p id="contactStatus"></p>
+      <button id="contactSubmit" class="btn" style="margin-top:10px;">Send Message</button>
+
+      <p id="contactStatus" style="margin-top:12px;"></p>
     </section>
+
   </main>
 
   <script src="js/main.js"></script>
-  <script src="js/contact.js"></script>
+
+  <script>
+    /* ---------------------------------------------------------
+       CONTACT FORM SUBMISSION
+    --------------------------------------------------------- */
+    document.getElementById("contactSubmit").addEventListener("click", async () => {
+      const name = document.getElementById("contactName").value.trim();
+      const email = document.getElementById("contactEmail").value.trim();
+      const message = document.getElementById("contactMessage").value.trim();
+      const status = document.getElementById("contactStatus");
+
+      if (!name || !email || !message) {
+        status.textContent = "Please fill out all fields.";
+        status.style.color = "var(--accent-yellow)";
+        return;
+      }
+
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message })
+      });
+
+      const data = await res.json();
+
+      if (!data.success) {
+        status.textContent = "Failed to send message.";
+        status.style.color = "red";
+        return;
+      }
+
+      status.textContent = "Message sent successfully.";
+      status.style.color = "green";
+
+      document.getElementById("contactName").value = "";
+      document.getElementById("contactEmail").value = "";
+      document.getElementById("contactMessage").value = "";
+    });
+
+    /* ---------------------------------------------------------
+       HIDDEN ADMIN HOTSPOT
+    --------------------------------------------------------- */
+    let tapCount = 0;
+    let tapTimer = null;
+
+    document.getElementById("adminHotspot").addEventListener("click", () => {
+      tapCount++;
+
+      if (tapTimer) clearTimeout(tapTimer);
+
+      tapTimer = setTimeout(() => {
+        tapCount = 0;
+      }, 800);
+
+      if (tapCount === 4) {
+        window.location.href = "admin.html";
+      }
+    });
+  </script>
+
 </body>
 </html>
