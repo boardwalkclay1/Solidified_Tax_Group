@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contractor Dashboard</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="st-logo">
+    <span class="st-s">S</span><span class="st-t">T</span>
+    <span class="st-dot-left"></span><span class="st-dot-top"></span>
+  </div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="contractor-dashboard.html">Dashboard</a>
+  </nav>
+
+  <button class="theme-toggle" id="themeToggle">Theme</button>
+</header>
+
+<main class="page">
+
+  <section class="card">
+    <h2>Contractor Dashboard</h2>
+    <p id="welcome">Loading...</p>
+  </section>
+
+  <section class="card">
+    <h3>Your Earnings</h3>
+    <div id="earningsBox">Loading...</div>
+  </section>
+
+  <section class="card">
+    <h3>Your Referrals</h3>
+    <div id="referralsBox">Loading...</div>
+  </section>
+
+</main>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const email = localStorage.getItem("contractorEmail");
+  if (!email) return window.location.href = "index.html";
+
+  document.getElementById("welcome").textContent = `Welcome, ${email}`;
+
+  const earn = await fetch(`/api/contractor/earnings/${email}`);
+  const earnings = await earn.json();
+
+  document.getElementById("earningsBox").textContent =
+    `$${earnings.total || 0} earned`;
+
+  const ref = await fetch(`/api/contractor/referrals/${email}`);
+  const referrals = await ref.json();
+
+  document.getElementById("referralsBox").innerHTML =
+    referrals.map(r => `<div class="doc-item">${r.client}</div>`).join("");
+});
+</script>
+
+</body>
+</html>
