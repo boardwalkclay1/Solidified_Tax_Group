@@ -1,0 +1,14 @@
+{
+  "admins": [
+    {
+      "email": "her@email.com",
+      "passwordHash": "",
+      "role": "admin"
+    },
+    {
+      "email": "your@email.com",
+      "passwordHash": "",
+      "role": "superadmin"
+    }
+  ]
+}
