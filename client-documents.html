@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Documents - Solidified Tax Group</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="st-logo">
+      <span class="st-s">S</span>
+      <span class="st-t">T</span>
+      <span class="st-dot-left"></span>
+      <span class="st-dot-top"></span>
+    </div>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="client.html">Client Login</a>
+      <a href="client-dashboard.html">Dashboard</a>
+      <a href="client-documents.html">Documents</a>
+    </nav>
+
+    <button class="theme-toggle" id="themeToggle">Theme</button>
+  </header>
+
+  <main class="page">
+
+    <section class="card">
+      <h2>Your Documents</h2>
+      <div id="clientDocsList">Loading documents...</div>
+    </section>
+
+  </main>
+
+  <script src="js/main.js"></script>
+  <script>
+    const API_BASE = "/api";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const clientId = localStorage.getItem("clientId");
+      if (!clientId) {
+        window.location.href = "client.html";
+        return;
+      }
+      loadClientDocuments(clientId);
+    });
+
+    async function loadClientDocuments(clientId) {
+      const container = document.getElementById("clientDocsList");
+
+      try {
+        const res = await fetch(`${API_BASE}/clients/${clientId}/documents`);
+        const docs = await res.json();
+
+        if (!docs.length) {
+          container.textContent = "No documents uploaded yet.";
+          return;
+        }
+
+        container.innerHTML = docs.map(d => `
+          <div class="doc-item">
+            <strong>${d.originalName || "Document #" + d.id}</strong><br>
+            Uploaded: ${new Date(d.uploadedAt).toLocaleString()}<br>
+            ${d.signedAt ? `<span class="badge">Signed</span>` : ""}
+          </div>
+        `).join("");
+
+      } catch {
+        container.textContent = "Unable to load documents.";
+      }
+    }
+  </script>
+
+</body>
+</html>
