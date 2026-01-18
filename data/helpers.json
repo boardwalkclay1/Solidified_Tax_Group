@@ -1,0 +1,8 @@
+[
+  {
+    "id": 1,
+    "target": "upload-id",
+    "audience": "Client",
+    "text": "Upload a clear photo or scan of your government-issued ID."
+  }
+]
