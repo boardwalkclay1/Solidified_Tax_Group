@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin – Templates</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="st-logo">
+    <span class="st-s">S</span><span class="st-t">T</span>
+    <span class="st-dot-left"></span><span class="st-dot-top"></span>
+  </div>
+
+  <nav>
+    <a href="admin.html">Dashboard</a>
+    <a href="admin-templates.html">Templates</a>
+  </nav>
+
+  <button class="theme-toggle" id="themeToggle">Theme</button>
+</header>
+
+<main class="page">
+
+  <section class="card">
+    <h2>Document Templates</h2>
+    <div id="templatesList">Loading...</div>
+  </section>
+
+  <section class="card">
+    <h3>Add Template</h3>
+    <input id="templateName" placeholder="Template name">
+    <textarea id="templateContent" placeholder="Template content"></textarea>
+    <button id="addTemplateBtn" class="btn">Add Template</button>
+  </section>
+
+</main>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  loadTemplates();
+  document.getElementById("addTemplateBtn").onclick = addTemplate;
+});
+
+async function loadTemplates() {
+  const res = await fetch("/api/templates");
+  const templates = await res.json();
+
+  document.getElementById("templatesList").innerHTML = templates.map(t => `
+    <div class="template-item">
+      <strong>${t.name}</strong><br>
+      <pre>${t.content}</pre>
+    </div>
+  `).join("");
+}
+
+async function addTemplate() {
+  const name = document.getElementById("templateName").value.trim();
+  const content = document.getElementById("templateContent").value.trim();
+
+  const res = await fetch("/api/templates/add", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ name, content })
+  });
+
+  const data = await res.json();
+  if (data.success) loadTemplates();
+}
+</script>
+
+</body>
+</html>
