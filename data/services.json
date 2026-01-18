@@ -1,8 +1,52 @@
 [
   {
     "id": 1,
-    "name": "Individual Return",
-    "slug": "individual-return",
-    "description": "Standard and itemized returns for individuals."
+    "name": "Individual Tax Preparation & Filing",
+    "description": "Comprehensive preparation and electronic filing for individuals with W‑2, 1099, mixed income, dependents, education credits, and itemized deductions. Includes review of prior‑year returns for missed credits or deductions."
+  },
+  {
+    "id": 2,
+    "name": "Self‑Employed & 1099 Income Tax Strategy",
+    "description": "Tax planning and filing for contractors, gig workers, and self‑employed individuals. Includes expense categorization, home office deductions, mileage, estimated tax planning, and quarterly payment guidance."
+  },
+  {
+    "id": 3,
+    "name": "Small Business & LLC Tax Filing",
+    "description": "Preparation and filing for single‑member LLCs, partnerships, and S‑Corporations. Includes profit and loss review, reasonable compensation guidance, and coordination with bookkeeping records."
+  },
+  {
+    "id": 4,
+    "name": "Schedule C & Side Business Reporting",
+    "description": "Reporting for side businesses, consulting, and freelance work. Includes expense tracking review, depreciation, and documentation recommendations to support IRS compliance."
+  },
+  {
+    "id": 5,
+    "name": "Tax Amendments & Corrections",
+    "description": "Preparation and filing of amended returns to correct prior filings, claim missed credits, or address IRS notices. Includes explanation letters and documentation guidance."
+  },
+  {
+    "id": 6,
+    "name": "Year‑Round Tax Planning & Advisory",
+    "description": "Proactive planning sessions to reduce tax liability before year‑end. Includes withholding reviews, estimated tax calculations, entity structure discussions, and strategy for upcoming life or business changes."
+  },
+  {
+    "id": 7,
+    "name": "IRS Notice & Letter Response Support",
+    "description": "Review and interpretation of IRS letters and notices, with guided response strategies. Includes documentation review and preparation of response packages where applicable."
+  },
+  {
+    "id": 8,
+    "name": "Document Review & Compliance Check",
+    "description": "Detailed review of tax documents, income records, and prior returns to identify risks, missing forms, or inconsistencies before filing or responding to the IRS."
+  },
+  {
+    "id": 9,
+    "name": "Digital Document Handling & Secure Uploads",
+    "description": "Secure digital intake of IDs, Social Security cards, income forms, and supporting documents. Includes encrypted storage where applicable and controlled access for authorized staff only."
+  },
+  {
+    "id": 10,
+    "name": "Electronic Signatures & Remote Approval",
+    "description": "Digital signature workflows for tax documents, engagement letters, and authorizations. Clients can review, sign, and return documents from any device."
   }
 ]
