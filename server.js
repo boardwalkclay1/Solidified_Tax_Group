@@ -192,6 +192,15 @@ app.get("/api/clients/:id/documents", async (req, res) => {
   res.json(docs.filter(d => d.clientId === id));
 });
 
+/* Single document fetch for client-sign.html */
+app.get("/api/documents/:id", async (req, res) => {
+  const docId = Number(req.params.id);
+  const docs = (await readJson("documents.json")) || [];
+  const doc = docs.find(d => d.id === docId);
+  if (!doc) return res.status(404).json({ error: "Document not found" });
+  res.json(doc);
+});
+
 app.post("/api/clients/:id/upload", async (req, res) => {
   const id = Number(req.params.id);
 
@@ -252,6 +261,63 @@ app.post("/api/documents/:id/sign", async (req, res) => {
   docs[idx].signedAt = new Date().toISOString();
 
   await writeJson("documents.json", docs);
+
+  res.json({ success: true });
+});
+
+/* ---------------- SERVICES MANAGEMENT (HYBRID OPTION 3) ---------------- */
+
+app.post("/api/services/add", requireAdmin, async (req, res) => {
+  if (req.admin.role !== "superadmin") {
+    return res.status(403).json({ error: "Only superadmin can modify services" });
+  }
+
+  const { name, description } = req.body;
+  if (!name || !description) {
+    return res.status(400).json({ error: "Name and description are required." });
+  }
+
+  const services = (await readJson("services.json")) || [];
+  const newId = services.length ? Math.max(...services.map(s => s.id)) + 1 : 1;
+
+  const newService = { id: newId, name, description };
+  services.push(newService);
+  await writeJson("services.json", services);
+
+  res.json({ success: true, service: newService });
+});
+
+app.put("/api/services/:id", requireAdmin, async (req, res) => {
+  if (req.admin.role !== "superadmin") {
+    return res.status(403).json({ error: "Only superadmin can modify services" });
+  }
+
+  const id = Number(req.params.id);
+  const { name, description } = req.body;
+
+  const services = (await readJson("services.json")) || [];
+  const idx = services.findIndex(s => s.id === id);
+  if (idx === -1) return res.status(404).json({ error: "Service not found" });
+
+  if (name) services[idx].name = name;
+  if (description) services[idx].description = description;
+
+  await writeJson("services.json", services);
+  res.json({ success: true, service: services[idx] });
+});
+
+app.delete("/api/services/:id", requireAdmin, async (req, res) => {
+  if (req.admin.role !== "superadmin") {
+    return res.status(403).json({ error: "Only superadmin can modify services" });
+  }
+
+  const id = Number(req.params.id);
+  const services = (await readJson("services.json")) || [];
+  const idx = services.findIndex(s => s.id === id);
+  if (idx === -1) return res.status(404).json({ error: "Service not found" });
+
+  services.splice(idx, 1);
+  await writeJson("services.json", services);
 
   res.json({ success: true });
 });
