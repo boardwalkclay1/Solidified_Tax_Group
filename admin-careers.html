@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin – Applicants</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="st-logo">
+    <span class="st-s">S</span><span class="st-t">T</span>
+    <span class="st-dot-left"></span><span class="st-dot-top"></span>
+  </div>
+
+  <nav>
+    <a href="admin.html">Dashboard</a>
+    <a href="admin-careers.html">Applicants</a>
+  </nav>
+
+  <button class="theme-toggle" id="themeToggle">Theme</button>
+</header>
+
+<main class="page">
+
+  <section class="card">
+    <h2>All Applicants</h2>
+    <div id="appsList">Loading...</div>
+  </section>
+
+</main>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", loadApps);
+
+async function loadApps() {
+  const res = await fetch("/api/careers/all");
+  const apps = await res.json();
+
+  document.getElementById("appsList").innerHTML = apps.map(a => `
+    <div class="client-item">
+      <strong>${a.name}</strong> — ${a.role}<br>
+      ${a.email} • ${a.phone}<br><br>
+      <em>${a.experience}</em><br><br>
+      <small>Submitted: ${new Date(a.submittedAt).toLocaleString()}</small>
+    </div>
+  `).join("");
+}
+</script>
+
+</body>
+</html>
