@@ -1,106 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Client Dashboard - Solidified Tax Group</title>
-  <link rel="stylesheet" href="styles/style.css" />
-</head>
+<main class="dashboard-layout">
 
-<body>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h3 class="sidebar-title">Client Menu</h3>
+    <a href="client-documents.html">📄 Documents</a>
+    <a href="client-upload.html">⬆️ Upload</a>
+    <a href="client-sign.html">✍️ Sign Docs</a>
+    <a href="client-sign-history.html">🗂️ Signed History</a>
+    <a href="client-status.html">📊 Tax Status</a>
+    <a href="client-tax-year.html">📅 Tax Year</a>
+    <a href="client-messages.html">💬 Messages</a>
+    <a href="client-profile.html">👤 Profile</a>
+    <a href="contact.html">🆘 Support</a>
+  </aside>
 
-  <header class="topbar">
-    <div class="st-logo">
-      <span class="st-s">S</span>
-      <span class="st-t">T</span>
-      <span class="st-dot-left"></span>
-      <span class="st-dot-top"></span>
+  <!-- MAIN CONTENT -->
+  <section class="dashboard-main">
+
+    <h2>Welcome Back</h2>
+    <p id="clientWelcome">Loading...</p>
+
+    <!-- QUICK STATS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3 id="statDocs">0</h3>
+        <p>Documents</p>
+      </div>
+
+      <div class="stat-card">
+        <h3 id="statSigned">0</h3>
+        <p>Signed</p>
+      </div>
+
+      <div class="stat-card">
+        <h3 id="statMessages">0</h3>
+        <p>Messages</p>
+      </div>
     </div>
 
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="client.html">Client Login</a>
-      <a href="client-dashboard.html">Dashboard</a>
-      <a href="contact.html">Contact</a>
-    </nav>
+    <!-- ACTION GRID -->
+    <div class="action-grid">
 
-    <button class="theme-toggle" id="themeToggle">Theme</button>
-  </header>
+      <a class="action-item" href="client-documents.html">
+        <span>📄</span>
+        <h4>View Documents</h4>
+      </a>
 
-  <main class="page">
+      <a class="action-item" href="client-upload.html">
+        <span>⬆️</span>
+        <h4>Upload Files</h4>
+      </a>
 
-    <section class="card">
-      <h2>Client Dashboard</h2>
-      <p id="clientWelcome">Welcome.</p>
-    </section>
+      <a class="action-item" href="client-sign.html">
+        <span>✍️</span>
+        <h4>Sign Documents</h4>
+      </a>
 
-    <section class="card">
-      <h3>Your Documents</h3>
-      <div id="clientDocsList">Loading documents...</div>
-      <div style="margin-top:16px;">
-        <a class="btn secondary" href="client-upload.html">Upload New Document</a>
-      </div>
-    </section>
+      <a class="action-item" href="client-status.html">
+        <span>📊</span>
+        <h4>Tax Status</h4>
+      </a>
 
-    <section class="card">
-      <h3>Actions</h3>
-      <ul>
-        <li><a href="client-upload.html">Upload documents</a></li>
-        <li><a href="client-sign.html">Review & sign documents</a></li>
-      </ul>
-    </section>
+      <a class="action-item" href="client-messages.html">
+        <span>💬</span>
+        <h4>Messages</h4>
+      </a>
 
-  </main>
+      <a class="action-item" href="client-profile.html">
+        <span>👤</span>
+        <h4>Profile</h4>
+      </a>
 
-  <script src="js/main.js"></script>
-  <script>
-    const API_BASE = "/api";
+    </div>
 
-    document.addEventListener("DOMContentLoaded", () => {
-      setupClientDashboard();
-    });
+  </section>
 
-    async function setupClientDashboard() {
-      const clientId = localStorage.getItem("clientId");
-      const clientEmail = localStorage.getItem("clientEmail");
-
-      if (!clientId) {
-        window.location.href = "client.html";
-        return;
-      }
-
-      if (clientEmail) {
-        document.getElementById("clientWelcome").textContent =
-          `Welcome, ${clientEmail}`;
-      }
-
-      loadClientDocuments(clientId);
-    }
-
-    async function loadClientDocuments(clientId) {
-      const container = document.getElementById("clientDocsList");
-
-      try {
-        const res = await fetch(`${API_BASE}/clients/${clientId}/documents`);
-        const docs = await res.json();
-
-        if (!docs.length) {
-          container.textContent = "No documents uploaded yet.";
-          return;
-        }
-
-        container.innerHTML = docs.map(d => `
-          <div class="doc-item">
-            <strong>${d.originalName || "Document #" + d.id}</strong><br>
-            Uploaded: ${new Date(d.uploadedAt).toLocaleString()}<br>
-            ${d.signedAt ? `<span class="badge">Signed</span>` : ""}
-          </div>
-        `).join("");
-
-      } catch {
-        container.textContent = "Unable to load documents.";
-      }
-    }
-  </script>
-
-</body>
-</html>
+</main>
