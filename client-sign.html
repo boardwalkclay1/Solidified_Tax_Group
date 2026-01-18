@@ -5,91 +5,121 @@
   <title>Sign Document - Solidified Tax Group</title>
   <link rel="stylesheet" href="styles/style.css" />
 </head>
+
 <body>
+
   <header class="topbar">
-    <div class="logo">
-      <span class="logo-s">S</span><span class="logo-t">T</span>
-      <span class="logo-dot-left"></span>
-      <span class="logo-dot-top"></span>
+    <div class="st-logo">
+      <span class="st-s">S</span>
+      <span class="st-t">T</span>
+      <span class="st-dot-left"></span>
+      <span class="st-dot-top"></span>
     </div>
+
     <nav>
       <a href="index.html">Home</a>
       <a href="client.html">Client Portal</a>
     </nav>
-    <button class="theme-toggle" id="themeToggle">Toggle Theme</button>
+
+    <button class="theme-toggle" id="themeToggle">Theme</button>
   </header>
 
   <main class="page">
+
     <section class="card">
       <h2>Sign Document</h2>
       <p>You can sign digitally below, or download and print the document to sign by hand.</p>
 
       <div id="docInfo" style="margin-bottom:12px;">Loading document...</div>
 
-      <button id="downloadDocBtn">Download Document</button>
+      <button id="downloadDocBtn" class="btn">Download Document</button>
 
-      <h3 style="margin-top:16px;">Digital Signature</h3>
-      <canvas id="signaturePad" width="500" height="200" style="border:1px solid #ccc;"></canvas><br/>
-      <button id="clearSigBtn">Clear</button>
-      <button id="saveSigBtn">Save Signature</button>
+      <h3 style="margin-top:20px;">Digital Signature</h3>
+
+      <canvas id="signaturePad" width="500" height="200" style="border:1px solid var(--border); border-radius:8px;"></canvas><br/>
+
+      <button id="clearSigBtn" class="btn secondary" style="margin-top:10px;">Clear</button>
+      <button id="saveSigBtn" class="btn" style="margin-top:10px;">Save Signature</button>
     </section>
+
   </main>
 
   <script src="js/main.js"></script>
+
   <script>
     let docId = null;
     let doc = null;
-    let isDrawing = false;
-    let lastX = 0;
-    let lastY = 0;
 
+    /* ---------------------------------------------------------
+       GET QUERY PARAM
+    --------------------------------------------------------- */
     function getQueryParam(name) {
       const params = new URLSearchParams(window.location.search);
       return params.get(name);
     }
 
+    /* ---------------------------------------------------------
+       LOAD DOCUMENT INFO (MATCHES NEW SERVER)
+    --------------------------------------------------------- */
     async function loadDocumentInfo() {
       docId = getQueryParam("docId");
+
       if (!docId) {
-        document.getElementById("docInfo").innerHTML = "<p>Missing document.</p>";
+        document.getElementById("docInfo").innerHTML = "<p>Missing document ID.</p>";
         return;
       }
-      const res = await fetch("/api/documents");
-      const docs = await res.json();
-      doc = docs.find(d => d.id === Number(docId));
-      if (!doc) {
+
+      // Fetch the specific document
+      const res = await fetch(`/api/documents/${docId}`);
+      const data = await res.json();
+
+      if (!data || data.error) {
         document.getElementById("docInfo").innerHTML = "<p>Document not found.</p>";
         return;
       }
+
+      doc = data;
+
       document.getElementById("docInfo").innerHTML = `
         <p><strong>${doc.originalName}</strong><br/>
-        Type: ${doc.type} • Year: ${doc.year}</p>
+        Uploaded: ${new Date(doc.uploadedAt).toLocaleDateString()}</p>
       `;
+
       document.getElementById("downloadDocBtn").onclick = () => {
         window.location.href = "/uploads/" + doc.filename;
       };
     }
 
+    /* ---------------------------------------------------------
+       SIGNATURE PAD
+    --------------------------------------------------------- */
     function initSignaturePad() {
       const canvas = document.getElementById("signaturePad");
       const ctx = canvas.getContext("2d");
+
+      let drawing = false;
+      let lastX = 0;
+      let lastY = 0;
+
       ctx.strokeStyle = "#000";
       ctx.lineWidth = 2;
 
       canvas.addEventListener("mousedown", e => {
-        isDrawing = true;
+        drawing = true;
         [lastX, lastY] = [e.offsetX, e.offsetY];
       });
+
       canvas.addEventListener("mousemove", e => {
-        if (!isDrawing) return;
+        if (!drawing) return;
         ctx.beginPath();
         ctx.moveTo(lastX, lastY);
         ctx.lineTo(e.offsetX, e.offsetY);
         ctx.stroke();
         [lastX, lastY] = [e.offsetX, e.offsetY];
       });
-      canvas.addEventListener("mouseup", () => (isDrawing = false));
-      canvas.addEventListener("mouseout", () => (isDrawing = false));
+
+      canvas.addEventListener("mouseup", () => drawing = false);
+      canvas.addEventListener("mouseout", () => drawing = false);
 
       document.getElementById("clearSigBtn").onclick = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -97,22 +127,34 @@
 
       document.getElementById("saveSigBtn").onclick = async () => {
         if (!docId) return alert("No document loaded.");
+
         const dataUrl = canvas.toDataURL("image/png");
+
         const res = await fetch(`/api/documents/${docId}/sign`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ signatureDataUrl: dataUrl })
         });
-        const data = await res.json();
-        if (!data.success) return alert("Failed to save signature.");
-        alert("Signature saved. Thank you.");
+
+        const result = await res.json();
+
+        if (!result.success) {
+          alert("Failed to save signature.");
+          return;
+        }
+
+        alert("Signature saved successfully.");
       };
     }
 
+    /* ---------------------------------------------------------
+       INIT
+    --------------------------------------------------------- */
     document.addEventListener("DOMContentLoaded", async () => {
       await loadDocumentInfo();
       initSignaturePad();
     });
   </script>
+
 </body>
 </html>
