@@ -313,3 +313,135 @@ textarea:focus {
 .theme-toggle:hover {
   box-shadow: 0 0 14px rgba(247,181,0,0.45);
 }
+/* ---------------------------------------------------------
+   GLOBAL POLISH — smoother, cleaner, premium
+--------------------------------------------------------- */
+
+/* Softer global background */
+body {
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  letter-spacing: -0.2px;
+}
+
+/* Card polish */
+.card {
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+}
+
+/* Buttons polish */
+button,
+.btn {
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  padding: 13px 24px;
+}
+
+button:hover,
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Inputs polish */
+input,
+select,
+textarea {
+  border: 1px solid rgba(0,0,0,0.12);
+  background: var(--card-bg);
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--accent-yellow);
+  box-shadow: 0 0 12px rgba(247,181,0,0.35);
+}
+
+/* List items polish */
+.doc-item,
+.client-item,
+.template-item {
+  border: 1px solid rgba(0,0,0,0.08);
+  padding: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.doc-item:hover,
+.client-item:hover,
+.template-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+/* Badge polish */
+.badge {
+  background: var(--accent-yellow);
+  padding: 4px 10px;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+/* Hero polish */
+.hero h1 {
+  font-size: 50px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.hero p {
+  font-size: 18px;
+  opacity: 0.85;
+}
+
+/* Navigation polish */
+nav a {
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+nav a:hover {
+  opacity: 1;
+  text-shadow: 0 0 8px rgba(247,181,0,0.45);
+}
+
+/* Topbar polish */
+.topbar {
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Admin grid polish */
+.admin-grid {
+  gap: 30px;
+}
+
+/* Service-item polish */
+.service-item {
+  padding: 18px;
+  border-radius: var(--radius);
+  background: var(--card-bg);
+  border: 1px solid rgba(0,0,0,0.08);
+  transition: 0.25s ease;
+}
+
+.service-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+}
+
+/* Footer polish (if added later) */
+footer {
+  text-align: center;
+  padding: 40px 0;
+  opacity: 0.6;
+  font-size: 14px;
+}
