@@ -1,67 +1,123 @@
+<!-- client.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Client Portal - Solidified Tax Group</title>
-  <link rel="stylesheet" href="styles/client.css" />
+  <title>Client Portal – Solidified Tax Group</title>
   <link rel="stylesheet" href="styles/style.css" />
 </head>
+
 <body>
-  <header class="topbar">
-    <div class="logo">
-      <span class="logo-s">S</span><span class="logo-t">T</span>
-      <span class="logo-dot-left"></span>
-      <span class="logo-dot-top"></span>
+
+<header class="topbar">
+  <div class="st-logo">
+    <span class="st-s">S</span>
+    <span class="st-t">T</span>
+    <span class="st-dot-left"></span>
+    <span class="st-dot-top"></span>
+  </div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="client.html">Client Portal</a>
+    <a href="client-intake.html">Client Intake</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main class="page">
+
+  <section class="card">
+    <h2>Client Portal Login</h2>
+    <p>Access your dashboard, documents, and tax services.</p>
+
+    <form id="clientLoginForm" class="form">
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="tel" name="phone" placeholder="Phone Number" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <button type="submit" class="btn">Enter Portal</button>
+      <p id="loginMsg" style="margin-top:10px;"></p>
+    </form>
+  </section>
+
+  <section class="card">
+    <h2>Quick Actions</h2>
+    <div class="service-grid">
+      <div class="service-item" onclick="goTo('client-dashboard.html')">
+        <h3>Dashboard</h3>
+        <p>View your tax overview and status.</p>
+      </div>
+      <div class="service-item" onclick="goTo('client-documents.html')">
+        <h3>Documents</h3>
+        <p>View and download your uploaded documents.</p>
+      </div>
+      <div class="service-item" onclick="goTo('client-intake.html')">
+        <h3>Client Intake</h3>
+        <p>Complete your intake form and upload required info.</p>
+      </div>
+      <div class="service-item" onclick="goTo('client-upload.html')">
+        <h3>Upload Documents</h3>
+        <p>Upload IDs, W‑2s, 1099s, and more.</p>
+      </div>
     </div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="client.html">Client Portal</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-    <button class="theme-toggle" id="themeToggle">Toggle Theme</button>
-  </header>
+  </section>
 
-  <main class="page">
-    <section class="card" id="clientLoginCard">
-      <h2>Client Login</h2>
-      <label>Email</label>
-      <input type="email" id="clientEmail" placeholder="you@example.com" />
+</main>
 
-      <label>Phone Number</label>
-      <input type="text" id="clientPhone" placeholder="555-123-4567" />
+<script>
+  function goTo(page) {
+    window.location.href = page;
+  }
 
-      <label>Password</label>
-      <input type="password" id="clientPassword" />
+  document.getElementById("clientLoginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById("loginMsg");
+    msg.textContent = "Signing in...";
 
-      <button id="clientLoginBtn">Log In</button>
-      <p class="helper">Use the email and phone you provided to Solidified Tax Group.</p>
-    </section>
+    const form = e.target;
+    const email = form.email.value.trim();
+    const phone = form.phone.value.trim();
+    const password = form.password.value.trim();
 
-    <section class="card" id="clientPortalCard" style="display:none;">
-      <h2>Your Documents</h2>
-      <div id="clientInfo"></div>
+    try {
+      const res = await fetch("/api/client/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, phone, password })
+      });
 
-      <h3>Uploaded Documents</h3>
-      <div id="clientDocs">Loading...</div>
+      const data = await res.json();
 
-      <h3>Upload a Document</h3>
-      <label>Type</label>
-      <select id="clientUploadType">
-        <option value="ID">ID</option>
-        <option value="SSN">Social Security Card</option>
-        <option value="Income">Income (W-2, 1099, etc.)</option>
-        <option value="Other">Other</option>
-      </select>
+      if (!data.success) {
+        msg.textContent = data.error || "Login failed.";
+        msg.style.color = "red";
+        return;
+      }
 
-      <label>File</label>
-      <input type="file" id="clientUploadFile" />
+      localStorage.setItem("clientEmail", email);
+      msg.textContent = "Login successful. Redirecting...";
+      msg.style.color = "green";
 
-      <button id="clientUploadBtn">Upload</button>
-      <p class="helper" id="uploadHelper"></p>
-    </section>
-  </main>
+      const selectedService = localStorage.getItem("selectedService");
 
-  <script src="js/main.js"></script>
-  <script src="js/client.js"></script>
+      if (selectedService === "document-upload") {
+        window.location.href = "client-upload.html";
+      } else if (selectedService === "sign-documents") {
+        window.location.href = "client-documents.html";
+      } else if (selectedService === "refund-status") {
+        window.location.href = "client-dashboard.html";
+      } else if (selectedService === "personal-tax" || selectedService === "business-tax" || selectedService === "amendments") {
+        window.location.href = "client-dashboard.html";
+      } else {
+        window.location.href = "client-dashboard.html";
+      }
+
+    } catch (err) {
+      msg.textContent = "Error connecting to server.";
+      msg.style.color = "red";
+    }
+  });
+</script>
+
 </body>
 </html>
