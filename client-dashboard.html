@@ -2,76 +2,85 @@
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <h3 class="sidebar-title">Client Menu</h3>
-    <a href="client-documents.html">📄 Documents</a>
-    <a href="client-upload.html">⬆️ Upload</a>
-    <a href="client-sign.html">✍️ Sign Docs</a>
-    <a href="client-sign-history.html">🗂️ Signed History</a>
-    <a href="client-status.html">📊 Tax Status</a>
-    <a href="client-tax-year.html">📅 Tax Year</a>
-    <a href="client-messages.html">💬 Messages</a>
-    <a href="client-profile.html">👤 Profile</a>
-    <a href="contact.html">🆘 Support</a>
+    <div class="sidebar-header">
+      <h3>Client Menu</h3>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="client-documents.html">📄 Documents</a>
+      <a href="client-upload.html">⬆️ Upload</a>
+      <a href="client-sign.html">✍️ Sign Docs</a>
+      <a href="client-sign-history.html">🗂️ Signed History</a>
+      <a href="client-status.html">📊 Tax Status</a>
+      <a href="client-tax-year.html">📅 Tax Year</a>
+      <a href="client-messages.html">💬 Messages</a>
+      <a href="client-profile.html">👤 Profile</a>
+      <a href="contact.html">🆘 Support</a>
+    </nav>
   </aside>
 
   <!-- MAIN CONTENT -->
   <section class="dashboard-main">
 
-    <h2>Welcome Back</h2>
-    <p id="clientWelcome">Loading...</p>
+    <header class="dashboard-header">
+      <h2>Welcome Back</h2>
+      <p id="clientWelcome" class="welcome-text">Loading...</p>
+    </header>
 
     <!-- QUICK STATS -->
-    <div class="stats-grid">
+    <section class="stats-grid">
+
       <div class="stat-card">
-        <h3 id="statDocs">0</h3>
-        <p>Documents</p>
+        <div class="stat-number" id="statDocs">0</div>
+        <div class="stat-label">Documents</div>
       </div>
 
       <div class="stat-card">
-        <h3 id="statSigned">0</h3>
-        <p>Signed</p>
+        <div class="stat-number" id="statSigned">0</div>
+        <div class="stat-label">Signed</div>
       </div>
 
       <div class="stat-card">
-        <h3 id="statMessages">0</h3>
-        <p>Messages</p>
+        <div class="stat-number" id="statMessages">0</div>
+        <div class="stat-label">Messages</div>
       </div>
-    </div>
+
+    </section>
 
     <!-- ACTION GRID -->
-    <div class="action-grid">
+    <section class="action-grid">
 
       <a class="action-item" href="client-documents.html">
-        <span>📄</span>
-        <h4>View Documents</h4>
+        <span class="action-icon">📄</span>
+        <h4 class="action-title">View Documents</h4>
       </a>
 
       <a class="action-item" href="client-upload.html">
-        <span>⬆️</span>
-        <h4>Upload Files</h4>
+        <span class="action-icon">⬆️</span>
+        <h4 class="action-title">Upload Files</h4>
       </a>
 
       <a class="action-item" href="client-sign.html">
-        <span>✍️</span>
-        <h4>Sign Documents</h4>
+        <span class="action-icon">✍️</span>
+        <h4 class="action-title">Sign Documents</h4>
       </a>
 
       <a class="action-item" href="client-status.html">
-        <span>📊</span>
-        <h4>Tax Status</h4>
+        <span class="action-icon">📊</span>
+        <h4 class="action-title">Tax Status</h4>
       </a>
 
       <a class="action-item" href="client-messages.html">
-        <span>💬</span>
-        <h4>Messages</h4>
+        <span class="action-icon">💬</span>
+        <h4 class="action-title">Messages</h4>
       </a>
 
       <a class="action-item" href="client-profile.html">
-        <span>👤</span>
-        <h4>Profile</h4>
+        <span class="action-icon">👤</span>
+        <h4 class="action-title">Profile</h4>
       </a>
 
-    </div>
+    </section>
 
   </section>
 
