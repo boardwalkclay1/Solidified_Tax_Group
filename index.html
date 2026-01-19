@@ -4,9 +4,142 @@
   <meta charset="UTF-8" />
   <title>Solidified Tax Group</title>
   <link rel="stylesheet" href="styles/style.css" />
+
+  <style>
+    /* ---------------- LOADING SCREEN ---------------- */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: #fdf2f8; /* soft pink */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 9999;
+      font-family: "Courier New", monospace;
+      color: #d63384;
+    }
+
+    .typewriter {
+      overflow: hidden;
+      border-right: 3px solid #d63384;
+      white-space: nowrap;
+      width: 0;
+      animation: typing 2.5s steps(40, end) forwards,
+                 blink .7s infinite;
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 320px }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent }
+    }
+
+    .page-shoot {
+      width: 40px;
+      height: 50px;
+      background: white;
+      border: 2px solid #d63384;
+      border-radius: 4px;
+      animation: shoot 0.8s ease-out infinite;
+      opacity: 0;
+    }
+
+    @keyframes shoot {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-120px); opacity: 0; }
+    }
+
+    /* ---------------- PRETTY BUTTONS ---------------- */
+    .btn {
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-size: 15px;
+      font-weight: 600;
+      background: #d63384;
+      color: white;
+      border: none;
+      transition: 0.25s ease;
+    }
+
+    .btn:hover {
+      background: #b82a6f;
+      transform: translateY(-2px);
+    }
+
+    .btn.secondary {
+      background: #ffd6e7;
+      color: #b82a6f;
+    }
+
+    .btn.secondary:hover {
+      background: #ffcae0;
+    }
+
+    /* ---------------- GIRLY HERO ---------------- */
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #ffe6f2, #fff);
+      border-radius: 20px;
+      margin-bottom: 40px;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      color: #b82a6f;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #7a3d57;
+      margin-bottom: 25px;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    /* ---------------- SERVICE CARDS ---------------- */
+    .service-item {
+      border: 1px solid #ffd6e7;
+      background: #fff7fb;
+      border-radius: 14px;
+      padding: 20px;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .service-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(255, 182, 216, 0.4);
+    }
+
+    .service-item h3 {
+      color: #b82a6f;
+    }
+
+    .service-item p {
+      color: #7a3d57;
+    }
+  </style>
 </head>
 
 <body>
+
+  <!-- ---------------- LOADING SCREEN ---------------- -->
+  <div id="loader">
+    <div class="typewriter">Preparing your experience...</div>
+    <div class="page-shoot"></div>
+  </div>
 
   <!-- Invisible 4‑tap admin hotspot -->
   <div id="adminHotspot" style="position:fixed; inset:0; z-index:200; background:transparent;"></div>
@@ -26,8 +159,6 @@
       <a href="privacy.html">Privacy</a>
       <a href="terms.html">Terms</a>
     </nav>
-
-    <button class="theme-toggle" id="themeToggle">Theme</button>
   </header>
 
   <main class="page">
@@ -35,7 +166,7 @@
     <!-- HERO -->
     <section class="hero">
       <h1>Solidified Tax Group</h1>
-      <p>Precision tax preparation, secure document handling, and a modern client experience.</p>
+      <p>Professional tax preparation with a soft, modern touch.</p>
 
       <div class="hero-actions">
         <a class="btn" href="client.html">Enter Client Portal</a>
@@ -64,16 +195,6 @@
           <p>Fix past returns, correct errors, claim missed refunds.</p>
         </div>
 
-        <div class="service-item" onclick="openService('bookkeeping')">
-          <h3>Bookkeeping</h3>
-          <p>Monthly reconciliation, income tracking, expense categorization.</p>
-        </div>
-
-        <div class="service-item" onclick="openService('audit-support')">
-          <h3>Audit Support</h3>
-          <p>IRS letters, notices, representation, document preparation.</p>
-        </div>
-
         <div class="service-item" onclick="openService('document-upload')">
           <h3>Document Upload</h3>
           <p>Securely upload IDs, W‑2s, 1099s, and tax forms.</p>
@@ -92,21 +213,17 @@
       </div>
     </section>
 
-    <!-- HOW IT WORKS -->
-    <section class="card">
-      <h2>How It Works</h2>
-      <ol>
-        <li><strong>Secure Access:</strong> Log in with your email, phone, and password.</li>
-        <li><strong>Upload Documents:</strong> ID, Social Security card, income forms, and more.</li>
-        <li><strong>Review & Sign:</strong> Receive documents digitally, sign online or upload.</li>
-      </ol>
-    </section>
-
   </main>
 
-  <script src="js/main.js"></script>
-
   <script>
+    /* ---------------- REMOVE LOADER ---------------- */
+    window.onload = () => {
+      setTimeout(() => {
+        document.getElementById("loader").style.opacity = "0";
+        setTimeout(() => document.getElementById("loader").remove(), 400);
+      }, 1800);
+    };
+
     /* ---------------- ADMIN HOTSPOT ---------------- */
     document.addEventListener("DOMContentLoaded", () => {
       let taps = 0;
@@ -114,10 +231,8 @@
 
       document.getElementById("adminHotspot").addEventListener("click", () => {
         taps++;
-
         if (timer) clearTimeout(timer);
         timer = setTimeout(() => taps = 0, 800);
-
         if (taps === 4) window.location.href = "admin.html";
       });
     });
