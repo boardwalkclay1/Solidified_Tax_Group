@@ -1,5 +1,7 @@
+/* GLOBAL */
 :root {
   --accent-blue: #2a62ff;
+  --yellow: #f7b500;
   --border: #d0d0d0;
   --text: #222;
   --text-light: #555;
@@ -30,7 +32,7 @@ body {
   font-weight: 600;
 }
 
-/* ST LOGO — FINAL COLORS + DOTS */
+/* ST LOGO */
 .st-logo {
   position: relative;
   display: flex;
@@ -43,7 +45,7 @@ body {
 .st-logo .st-s {
   font-size: 34px;
   margin-right: 2px;
-  color: #f7b500;
+  color: var(--yellow);
   position: relative;
   top: 1px;
 }
@@ -51,7 +53,7 @@ body {
 .st-logo .st-t {
   font-size: 34px;
   margin-left: 2px;
-  color: #0055ff;
+  color: var(--accent-blue);
   position: relative;
   top: -1px;
 }
@@ -62,7 +64,7 @@ body {
   top: 50%;
   width: 8px;
   height: 8px;
-  background: #000000;
+  background: #000;
   border-radius: 50%;
   transform: translateY(-50%);
 }
@@ -73,7 +75,7 @@ body {
   left: calc(100% - 10px);
   width: 8px;
   height: 8px;
-  background: #f7b500;
+  background: var(--yellow);
   border-radius: 50%;
 }
 
@@ -108,7 +110,7 @@ body {
 /* PAPER BUTTONS */
 .paper-btn {
   display: block;
-  width: 180px;
+  width: 220px;
   padding: 20px;
   border-radius: 12px;
   background: #fff;
@@ -119,6 +121,12 @@ body {
   color: var(--text);
   position: relative;
   font-weight: 600;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.paper-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.18);
 }
 
 .paper-btn .paper-title {
@@ -134,7 +142,90 @@ body {
   display: block;
 }
 
-/* SERVICE CARDS */
+/* SERVICE GRID */
 .service-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* CARD */
+.card {
+  background: #fff;
+  padding: 24px;
+  margin: 24px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+
+/* PAGE WRAPPER */
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+/* BUTTONS */
+.btn {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent-blue);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ADMIN HOTSPOT */
+#adminHotspot {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  z-index: 200;
+  background: transparent;
+}
+
+/* TYPEWRITER LOADER */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+#loaderText {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent-blue);
+  font-family: monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid var(--accent-blue);
+  width: 0;
+}
+
+/* FALLING PAPER */
+.falling-paper {
+  position: fixed;
+  width: 18px;
+  height: 22px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transform: rotate(-5deg);
+  z-index: 999;
+  pointer-events: none;
+  animation: fall 1.2s ease-out forwards;
+}
+
+@keyframes fall {
+  0% { opacity: 1; transform: translateY(0) rotate(-5deg); }
+  100% { opacity: 0; transform: translateY(80px) rotate(5deg); }
+}
