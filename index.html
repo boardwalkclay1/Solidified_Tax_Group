@@ -21,24 +21,10 @@
       text-decoration: none;
       position: relative;
       overflow: hidden;
-      transition: 0.2s ease;
-    }
-
-    .paper-btn::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-top: 4px solid var(--accent-yellow);
-      opacity: 0.9;
-    }
-
-    .paper-btn:hover {
-      transform: translateY(-2px) rotate(-1deg);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.16);
     }
 
     .paper-btn.secondary {
-      border-top-color: var(--accent-blue);
+      border-top: 4px solid var(--accent-blue);
     }
 
     /* ---------- HERO ---------- */
@@ -71,25 +57,23 @@
 
     /* ---------- SERVICE CARDS ---------- */
     .service-item {
+      display: block;
       border: 1px solid var(--border);
       background: var(--card-bg);
       border-radius: 14px;
       padding: 20px;
-      cursor: pointer;
-      transition: 0.25s ease;
-    }
-
-    .service-item:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      text-decoration: none;
+      color: var(--text);
     }
 
     .service-item h3 {
       color: var(--accent-blue);
+      margin-bottom: 6px;
     }
 
     .service-item p {
       color: var(--text-light);
+      margin: 0;
     }
 
     /* ---------- PENCIL CURSOR ---------- */
@@ -149,9 +133,9 @@
       <p>Precision tax preparation, secure documents, and a modern client experience.</p>
 
       <div class="hero-actions">
-        <button class="paper-btn" id="btnPortal">Enter Client Portal</button>
-        <button class="paper-btn secondary" id="btnConsult">Schedule a Consultation</button>
-        <button class="paper-btn" id="btnIntake">Start Client Intake</button>
+        <a class="paper-btn" href="client.html">Enter Client Portal</a>
+        <a class="paper-btn secondary" href="contact.html">Schedule a Consultation</a>
+        <a class="paper-btn" href="client-intake.html">Start Client Intake</a>
       </div>
     </section>
 
@@ -161,40 +145,40 @@
 
       <div class="service-grid">
 
-        <div class="service-item" data-service="personal-tax">
+        <a class="service-item" href="client.html" data-service="personal-tax">
           <h3>Personal Tax Preparation</h3>
           <p>1040 filing, W‑2s, 1099s, dependents, credits, deductions.</p>
-        </div>
+        </a>
 
-        <div class="service-item" data-service="business-tax">
+        <a class="service-item" href="client.html" data-service="business-tax">
           <h3>Business Tax Preparation</h3>
           <p>LLC, S‑Corp, C‑Corp, Schedule C, quarterly filings.</p>
-        </div>
+        </a>
 
-        <div class="service-item" data-service="amendments">
+        <a class="service-item" href="client.html" data-service="amendments">
           <h3>Tax Amendments</h3>
           <p>Fix past returns, correct errors, claim missed refunds.</p>
-        </div>
+        </a>
 
-        <div class="service-item" data-service="document-upload">
+        <a class="service-item" href="client.html" data-service="document-upload">
           <h3>Document Upload</h3>
           <p>Securely upload IDs, W‑2s, 1099s, and tax forms.</p>
-        </div>
+        </a>
 
-        <div class="service-item" data-service="sign-documents">
+        <a class="service-item" href="client.html" data-service="sign-documents">
           <h3>Sign Documents</h3>
           <p>Digitally sign tax forms and authorization documents.</p>
-        </div>
+        </a>
 
-        <div class="service-item" data-service="refund-status">
+        <a class="service-item" href="client.html" data-service="refund-status">
           <h3>Refund Status</h3>
           <p>Track your tax return progress and refund updates.</p>
-        </div>
+        </a>
 
-        <div class="service-item" id="serviceIntake">
+        <a class="service-item" href="client-intake.html">
           <h3>Client Intake Form</h3>
           <p>Start your tax intake and upload required documents.</p>
-        </div>
+        </a>
 
       </div>
     </section>
@@ -211,8 +195,44 @@
 
   </main>
 
-  <!-- LOAD MAIN.JS -->
-  <script src="js/main.js"></script>
+  <!-- JS -->
+  <script>
+    /* SERVICE SELECTION STORAGE */
+    document.querySelectorAll(".service-item[data-service]").forEach(item => {
+      item.addEventListener("click", () => {
+        const service = item.getAttribute("data-service");
+        localStorage.setItem("selectedService", service);
+      });
+    });
+
+    /* ADMIN HOTSPOT */
+    let taps = 0;
+    let timer = null;
+    document.getElementById("adminHotspot").addEventListener("click", () => {
+      taps++;
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => taps = 0, 800);
+      if (taps === 4) window.location.href = "admin.html";
+    });
+
+    /* FALLING PAPER */
+    function spawnPaper(x, y) {
+      const paper = document.createElement("div");
+      paper.className = "falling-paper";
+      paper.style.left = x + "px";
+      paper.style.top = y + "px";
+      document.body.appendChild(paper);
+      setTimeout(() => paper.remove(), 1200);
+    }
+
+    document.addEventListener("mousemove", e => {
+      if (Math.random() < 0.05) spawnPaper(e.clientX, e.clientY);
+    });
+
+    document.addEventListener("click", e => {
+      spawnPaper(e.clientX, e.clientY);
+    });
+  </script>
 
 </body>
 </html>
