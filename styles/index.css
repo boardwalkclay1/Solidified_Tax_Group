@@ -31,48 +31,55 @@ body {
   font-weight: 600;
 }
 
-/* ST LOGO */
+/* ST LOGO — FIXED EXACTLY AS REQUESTED */
 .st-logo {
   position: relative;
   display: flex;
   align-items: center;
   font-weight: 900;
   font-size: 32px;
-  color: var(--accent-blue);
   letter-spacing: -2px;
 }
 
+/* S = Yellow */
 .st-logo .st-s {
   font-size: 34px;
   margin-right: 2px;
+  color: #f7b500;
+  position: relative;
+  top: 1px; /* slight natural offset */
 }
 
+/* T = Blue */
 .st-logo .st-t {
   font-size: 34px;
   margin-left: 2px;
+  color: #0055ff;
+  position: relative;
+  top: -1px; /* slight natural offset */
 }
 
-/* Decorative dots */
-.st-logo .st-dot-left,
-.st-logo .st-dot-top {
+/* Black dot beside S */
+.st-logo .st-dot-left {
   position: absolute;
+  left: -12px;
+  top: 50%;
   width: 8px;
   height: 8px;
-  background: var(--accent-blue);
+  background: #000000;
   border-radius: 50%;
-}
-
-/* Dot to the left of the S */
-.st-logo .st-dot-left {
-  left: -10px;
-  top: 50%;
   transform: translateY(-50%);
 }
 
-/* Dot above the T */
+/* Yellow dot above T */
 .st-logo .st-dot-top {
-  right: -6px;
-  top: -6px;
+  position: absolute;
+  top: -12px;
+  left: calc(100% - 10px);
+  width: 8px;
+  height: 8px;
+  background: #f7b500;
+  border-radius: 50%;
 }
 
 /* HERO */
