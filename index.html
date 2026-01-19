@@ -149,9 +149,9 @@
       <p>Precision tax preparation, secure documents, and a modern client experience.</p>
 
       <div class="hero-actions">
-        <a class="paper-btn" href="client.html">Enter Client Portal</a>
-        <a class="paper-btn secondary" href="contact.html">Schedule a Consultation</a>
-        <a class="paper-btn" href="client-intake.html">Start Client Intake</a>
+        <button class="paper-btn" id="btnPortal">Enter Client Portal</button>
+        <button class="paper-btn secondary" id="btnConsult">Schedule a Consultation</button>
+        <button class="paper-btn" id="btnIntake">Start Client Intake</button>
       </div>
     </section>
 
@@ -161,37 +161,37 @@
 
       <div class="service-grid">
 
-        <div class="service-item" onclick="openService('personal-tax')">
+        <div class="service-item" data-service="personal-tax">
           <h3>Personal Tax Preparation</h3>
-          <p>1040 filing, W‑2, 1099, dependents, credits, deductions.</p>
+          <p>1040 filing, W‑2s, 1099s, dependents, credits, deductions.</p>
         </div>
 
-        <div class="service-item" onclick="openService('business-tax')">
+        <div class="service-item" data-service="business-tax">
           <h3>Business Tax Preparation</h3>
           <p>LLC, S‑Corp, C‑Corp, Schedule C, quarterly filings.</p>
         </div>
 
-        <div class="service-item" onclick="openService('amendments')">
+        <div class="service-item" data-service="amendments">
           <h3>Tax Amendments</h3>
           <p>Fix past returns, correct errors, claim missed refunds.</p>
         </div>
 
-        <div class="service-item" onclick="openService('document-upload')">
+        <div class="service-item" data-service="document-upload">
           <h3>Document Upload</h3>
           <p>Securely upload IDs, W‑2s, 1099s, and tax forms.</p>
         </div>
 
-        <div class="service-item" onclick="openService('sign-documents')">
+        <div class="service-item" data-service="sign-documents">
           <h3>Sign Documents</h3>
           <p>Digitally sign tax forms and authorization documents.</p>
         </div>
 
-        <div class="service-item" onclick="openService('refund-status')">
+        <div class="service-item" data-service="refund-status">
           <h3>Refund Status</h3>
           <p>Track your tax return progress and refund updates.</p>
         </div>
 
-        <div class="service-item" onclick="window.location.href='client-intake.html'">
+        <div class="service-item" id="serviceIntake">
           <h3>Client Intake Form</h3>
           <p>Start your tax intake and upload required documents.</p>
         </div>
@@ -211,29 +211,34 @@
 
   </main>
 
-  <!-- ALL WIRING LIVES HERE -->
+  <!-- JS -->
   <script>
-    /* ---------- SERVICE ROUTER ---------- */
-    function openService(service) {
-      localStorage.setItem("selectedService", service);
-      window.location.href = "client.html";
-    }
+    /* BUTTONS */
+    document.getElementById("btnPortal").onclick = () => window.location.href = "client.html";
+    document.getElementById("btnConsult").onclick = () => window.location.href = "contact.html";
+    document.getElementById("btnIntake").onclick = () => window.location.href = "client-intake.html";
+    document.getElementById("serviceIntake").onclick = () => window.location.href = "client-intake.html";
 
-    /* ---------- ADMIN HOTSPOT ---------- */
-    document.addEventListener("DOMContentLoaded", () => {
-      let taps = 0;
-      let timer = null;
-
-      const hotspot = document.getElementById("adminHotspot");
-      hotspot.addEventListener("click", () => {
-        taps++;
-        if (timer) clearTimeout(timer);
-        timer = setTimeout(() => taps = 0, 800);
-        if (taps === 4) window.location.href = "admin.html";
+    /* SERVICE CARDS */
+    document.querySelectorAll(".service-item[data-service]").forEach(card => {
+      card.addEventListener("click", () => {
+        const service = card.getAttribute("data-service");
+        localStorage.setItem("selectedService", service);
+        window.location.href = "client.html";
       });
     });
 
-    /* ---------- FALLING PAPER EFFECT ---------- */
+    /* ADMIN HOTSPOT */
+    let taps = 0;
+    let timer = null;
+    document.getElementById("adminHotspot").addEventListener("click", () => {
+      taps++;
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => taps = 0, 800);
+      if (taps === 4) window.location.href = "admin.html";
+    });
+
+    /* FALLING PAPER */
     function spawnPaper(x, y) {
       const paper = document.createElement("div");
       paper.className = "falling-paper";
@@ -243,11 +248,11 @@
       setTimeout(() => paper.remove(), 1200);
     }
 
-    document.addEventListener("mousemove", (e) => {
+    document.addEventListener("mousemove", e => {
       if (Math.random() < 0.05) spawnPaper(e.clientX, e.clientY);
     });
 
-    document.addEventListener("click", (e) => {
+    document.addEventListener("click", e => {
       spawnPaper(e.clientX, e.clientY);
     });
   </script>
