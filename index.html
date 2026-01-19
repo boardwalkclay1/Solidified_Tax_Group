@@ -94,7 +94,7 @@
 
     /* ---------- PENCIL CURSOR ---------- */
     body {
-      cursor: url("images/pencil-cursor.png"), auto; /* supply this asset */
+      cursor: url("images/pencil-cursor.png"), auto; /* make sure this file exists */
     }
 
     /* ---------- FALLING PAPER ---------- */
@@ -204,25 +204,29 @@
 
   </main>
 
+  <!-- ALL WIRING LIVES HERE -->
   <script>
-    /* ---------- ADMIN HOTSPOT ---------- */
-    document.addEventListener("DOMContentLoaded", () => {
-      let taps = 0;
-      let timer = null;
-
-      document.getElementById("adminHotspot").addEventListener("click", () => {
-        taps++;
-        if (timer) clearTimeout(timer);
-        timer = setTimeout(() => taps = 0, 800);
-        if (taps === 4) window.location.href = "admin.html";
-      });
-    });
-
-    /* ---------- SERVICE ROUTER ---------- */
+    /* ---------- SERVICE ROUTER (USED BY SERVICE CARDS) ---------- */
     function openService(service) {
       localStorage.setItem("selectedService", service);
       window.location.href = "client.html";
     }
+
+    /* ---------- ADMIN HOTSPOT (4 TAPS) ---------- */
+    document.addEventListener("DOMContentLoaded", () => {
+      let taps = 0;
+      let timer = null;
+
+      const hotspot = document.getElementById("adminHotspot");
+      if (hotspot) {
+        hotspot.addEventListener("click", () => {
+          taps++;
+          if (timer) clearTimeout(timer);
+          timer = setTimeout(() => taps = 0, 800);
+          if (taps === 4) window.location.href = "admin.html";
+        });
+      }
+    });
 
     /* ---------- FALLING PAPER EFFECT ---------- */
     function spawnPaper(x, y) {
