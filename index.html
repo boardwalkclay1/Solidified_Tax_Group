@@ -19,8 +19,6 @@
       font-weight: 600;
       color: var(--text);
       text-decoration: none;
-      position: relative;
-      overflow: hidden;
     }
 
     .paper-btn.secondary {
@@ -104,8 +102,16 @@
 
 <body>
 
-  <!-- Invisible 4‑tap admin hotspot -->
-  <div id="adminHotspot" style="position:fixed; inset:0; z-index:200; background:transparent;"></div>
+  <!-- TOP‑RIGHT ADMIN HOTSPOT (WORKS, DOESN’T BLOCK BUTTONS) -->
+  <div id="adminHotspot" style="
+    position:fixed;
+    top:0;
+    right:0;
+    width:60px;
+    height:60px;
+    z-index:200;
+    background:transparent;
+  "></div>
 
   <header class="topbar">
     <div class="st-logo">
@@ -197,15 +203,14 @@
 
   <!-- JS -->
   <script>
-    /* SERVICE SELECTION STORAGE */
+    /* STORE SELECTED SERVICE */
     document.querySelectorAll(".service-item[data-service]").forEach(item => {
       item.addEventListener("click", () => {
-        const service = item.getAttribute("data-service");
-        localStorage.setItem("selectedService", service);
+        localStorage.setItem("selectedService", item.getAttribute("data-service"));
       });
     });
 
-    /* ADMIN HOTSPOT */
+    /* ADMIN HOTSPOT (TOP‑RIGHT) */
     let taps = 0;
     let timer = null;
     document.getElementById("adminHotspot").addEventListener("click", () => {
