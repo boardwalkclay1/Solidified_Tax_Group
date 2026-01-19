@@ -19,14 +19,6 @@
       <span class="st-dot-top"></span>
     </div>
 
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="client.html">Client Portal</a>
-      <a href="contact.html">Contact</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-    </nav>
-
     <button class="theme-toggle" id="themeToggle">Theme</button>
   </header>
 
@@ -45,8 +37,51 @@
 
     <!-- SERVICES -->
     <section class="card">
-      <h2>Services</h2>
-      <div id="servicesList">Loading services...</div>
+      <h2>Our Services</h2>
+
+      <div class="service-grid">
+
+        <div class="service-item" onclick="openService('personal-tax')">
+          <h3>Personal Tax Preparation</h3>
+          <p>1040 filing, W‑2, 1099, dependents, credits, deductions.</p>
+        </div>
+
+        <div class="service-item" onclick="openService('business-tax')">
+          <h3>Business Tax Preparation</h3>
+          <p>LLC, S‑Corp, C‑Corp, Schedule C, quarterly filings.</p>
+        </div>
+
+        <div class="service-item" onclick="openService('amendments')">
+          <h3>Tax Amendments</h3>
+          <p>Fix past returns, correct errors, claim missed refunds.</p>
+        </div>
+
+        <div class="service-item" onclick="openService('bookkeeping')">
+          <h3>Bookkeeping</h3>
+          <p>Monthly reconciliation, income tracking, expense categorization.</p>
+        </div>
+
+        <div class="service-item" onclick="openService('audit-support')">
+          <h3>Audit Support</h3>
+          <p>IRS letters, notices, representation, document preparation.</p>
+        </div>
+
+        <div class="service-item" onclick="openService('document-upload')">
+          <h3>Document Upload</h3>
+          <p>Securely upload IDs, W‑2s, 1099s, and tax forms.</p>
+        </div>
+
+        <div class="service-item" onclick="openService('sign-documents')">
+          <h3>Sign Documents</h3>
+          <p>Digitally sign tax forms and authorization documents.</p>
+        </div>
+
+        <div class="service-item" onclick="openService('refund-status')">
+          <h3>Refund Status</h3>
+          <p>Track your tax return progress and refund updates.</p>
+        </div>
+
+      </div>
     </section>
 
     <!-- HOW IT WORKS -->
@@ -55,7 +90,7 @@
       <ol>
         <li><strong>Secure Access:</strong> Log in with your email, phone, and password.</li>
         <li><strong>Upload Documents:</strong> ID, Social Security card, income forms, and more.</li>
-        <li><strong>Review & Sign:</strong> Receive documents digitally, sign online or print and upload.</li>
+        <li><strong>Review & Sign:</strong> Receive documents digitally, sign online or upload.</li>
       </ol>
     </section>
 
@@ -77,33 +112,12 @@
 
         if (taps === 4) window.location.href = "admin.html";
       });
-
-      loadServices();
     });
 
-    /* ---------------- SERVICES LOADER ---------------- */
-    async function loadServices() {
-      const container = document.getElementById("servicesList");
-
-      try {
-        const res = await fetch("/api/services");
-        const services = await res.json();
-
-        if (!services.length) {
-          container.textContent = "Services will be listed here.";
-          return;
-        }
-
-        container.innerHTML = services.map(s => `
-          <div class="service-item">
-            <h3>${s.name}</h3>
-            <p>${s.description}</p>
-          </div>
-        `).join("");
-
-      } catch {
-        container.textContent = "Unable to load services.";
-      }
+    /* ---------------- SERVICE ROUTER ---------------- */
+    function openService(service) {
+      localStorage.setItem("selectedService", service);
+      window.location.href = "client.html";
     }
   </script>
 
