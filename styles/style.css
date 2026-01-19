@@ -1,22 +1,24 @@
 /* ---------------------------------------------------------
-   SOLIDIFIED TAX GROUP — FULL STYLE SYSTEM (REBUILT)
-   Premium Blue + Yellow Identity
-   Cinematic, Clean, Militant Consistency
+   SOLIDIFIED TAX GROUP — COMPLETE STYLE SYSTEM REBUILD
+   Cinematic • Clean • Modular • Dashboard-Ready
 --------------------------------------------------------- */
 
 /* ---------- ROOT VARIABLES ---------- */
 :root {
-  --bg: #f7f7f7;
-  --text: #222;
+  --bg: #f5f7fa;
+  --text: #1a1a1a;
+  --text-light: #555;
+
   --card-bg: #ffffff;
+  --card-bg-alt: #f0f3f7;
 
   --accent-blue: #0055ff;
-  --accent-yellow: #f7b500;
-
   --accent-blue-soft: #e6eeff;
-  --accent-yellow-soft: #fff6dd;
 
-  --border: rgba(0,0,0,0.10);
+  --accent-yellow: #f7b500;
+  --accent-yellow-soft: #fff4d4;
+
+  --border: rgba(0,0,0,0.12);
   --radius: 14px;
   --shadow: 0 6px 22px rgba(0,0,0,0.08);
   --transition: 0.25s ease;
@@ -26,12 +28,15 @@
 :root.dark {
   --bg: #0f0f0f;
   --text: #eaeaea;
+  --text-light: #bbb;
+
   --card-bg: #1a1a1a;
+  --card-bg-alt: #222;
 
   --accent-blue: #4d8dff;
-  --accent-yellow: #ffcc4d;
-
   --accent-blue-soft: #1f2a40;
+
+  --accent-yellow: #ffcc4d;
   --accent-yellow-soft: #3a2c10;
 
   --border: rgba(255,255,255,0.12);
@@ -56,7 +61,7 @@ body {
 }
 
 /* ---------------------------------------------------------
-   ST LOGO — Elegant, Slim, Cursive, Centered Dots
+   ST LOGO — Cinematic, Elegant
 --------------------------------------------------------- */
 
 .st-logo {
@@ -83,30 +88,30 @@ body {
   z-index: 1;
 }
 
-.st-dot-left {
+.st-dot-left,
+.st-dot-top {
   position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.st-dot-left {
+  background: #000;
   left: -12px;
   top: 50%;
   transform: translateY(-50%);
-  width: 7px;
-  height: 7px;
-  background: #000;
-  border-radius: 50%;
 }
 
 .st-dot-top {
-  position: absolute;
+  background: var(--accent-yellow);
   top: -8px;
   left: 50%;
   transform: translateX(18px);
-  width: 7px;
-  height: 7px;
-  background: var(--accent-yellow);
-  border-radius: 50%;
 }
 
 /* ---------------------------------------------------------
-   TOPBAR + NAV
+   TOPBAR
 --------------------------------------------------------- */
 
 .topbar {
@@ -122,21 +127,6 @@ body {
   top: 0;
   z-index: 100;
   backdrop-filter: blur(8px);
-}
-
-nav a {
-  margin-left: 24px;
-  text-decoration: none;
-  color: var(--text);
-  font-weight: 600;
-  opacity: 0.9;
-  transition: var(--transition);
-}
-
-nav a:hover {
-  opacity: 1;
-  color: var(--accent-yellow);
-  text-shadow: 0 0 8px rgba(247,181,0,0.45);
 }
 
 /* ---------------------------------------------------------
@@ -156,6 +146,7 @@ button,
   letter-spacing: -0.3px;
   transition: var(--transition);
   text-decoration: none;
+  display: inline-block;
 }
 
 button:hover,
@@ -175,14 +166,8 @@ button:hover,
 }
 
 /* ---------------------------------------------------------
-   PAGE + CARDS
+   CARDS
 --------------------------------------------------------- */
-
-.page {
-  max-width: 900px;
-  margin: 60px auto;
-  padding: 0 20px;
-}
 
 .card {
   background: var(--card-bg);
@@ -197,18 +182,6 @@ button:hover,
 .card:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 28px rgba(0,0,0,0.12);
-}
-
-.card h2,
-.card h3 {
-  margin-bottom: 12px;
-  font-weight: 700;
-}
-
-.card p,
-.card li {
-  opacity: 0.85;
-  line-height: 1.55;
 }
 
 /* ---------------------------------------------------------
@@ -238,103 +211,13 @@ textarea:focus {
 }
 
 /* ---------------------------------------------------------
-   LIST ITEMS
+   DASHBOARD LAYOUT
 --------------------------------------------------------- */
 
-.doc-item,
-.client-item,
-.template-item,
-.service-item {
-  padding: 16px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: var(--card-bg);
-  margin-bottom: 14px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.doc-item:hover,
-.client-item:hover,
-.template-item:hover,
-.service-item:hover {
-  transform: translateX(5px);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-}
-
-.badge {
-  display: inline-block;
-  background: var(--accent-yellow);
-  color: #222;
-  padding: 4px 10px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 600;
-  margin-top: 4px;
-}
-
-/* ---------------------------------------------------------
-   ADMIN GRID
---------------------------------------------------------- */
-
-.admin-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-}
-
-@media (max-width: 700px) {
-  .admin-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ---------------------------------------------------------
-   HERO SECTION
---------------------------------------------------------- */
-
-.hero {
-  text-align: center;
-  padding: 80px 20px;
-}
-
-.hero h1 {
-  font-size: 50px;
-  font-weight: 800;
-  letter-spacing: -1px;
-  margin-bottom: 16px;
-}
-
-.hero p {
-  max-width: 560px;
-  margin: 0 auto;
-  font-size: 18px;
-  opacity: 0.85;
-}
-
-.hero-actions {
-  margin-top: 30px;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-/* ---------------------------------------------------------
-   THEME TOGGLE
---------------------------------------------------------- */
-
-.theme-toggle {
-  background: var(--accent-yellow-soft);
-  color: var(--text);
-  border: 1px solid var(--accent-yellow);
-}
-
-.theme-toggle:hover {
-  box-shadow: 0 0 14px rgba(247,181,0,0.45);
-}
-/* DASHBOARD LAYOUT */
 .dashboard-layout {
   display: flex;
   gap: 30px;
+  padding: 30px;
 }
 
 /* SIDEBAR */
@@ -377,7 +260,10 @@ textarea:focus {
   flex: 1;
 }
 
-/* STATS GRID */
+/* ---------------------------------------------------------
+   STATS GRID
+--------------------------------------------------------- */
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -399,7 +285,10 @@ textarea:focus {
   margin-bottom: 6px;
 }
 
-/* ACTION GRID */
+/* ---------------------------------------------------------
+   ACTION GRID
+--------------------------------------------------------- */
+
 .action-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -427,4 +316,23 @@ textarea:focus {
 .action-item:hover {
   transform: translateY(-4px);
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .dashboard-layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .action-grid,
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
 }
