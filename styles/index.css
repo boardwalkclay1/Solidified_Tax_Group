@@ -31,6 +31,50 @@ body {
   font-weight: 600;
 }
 
+/* ST LOGO */
+.st-logo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-weight: 900;
+  font-size: 32px;
+  color: var(--accent-blue);
+  letter-spacing: -2px;
+}
+
+.st-logo .st-s {
+  font-size: 34px;
+  margin-right: 2px;
+}
+
+.st-logo .st-t {
+  font-size: 34px;
+  margin-left: 2px;
+}
+
+/* Decorative dots */
+.st-logo .st-dot-left,
+.st-logo .st-dot-top {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--accent-blue);
+  border-radius: 50%;
+}
+
+/* Dot to the left of the S */
+.st-logo .st-dot-left {
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Dot above the T */
+.st-logo .st-dot-top {
+  right: -6px;
+  top: -6px;
+}
+
 /* HERO */
 .hero {
   text-align: center;
@@ -38,6 +82,18 @@ body {
   background: linear-gradient(135deg, #e6eeff, #ffffff);
   border-radius: 20px;
   margin: 24px;
+}
+
+.hero h1 {
+  font-size: 40px;
+  color: var(--accent-blue);
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 18px;
+  color: var(--text-light);
+  margin-bottom: 24px;
 }
 
 .hero-actions {
@@ -110,6 +166,36 @@ body {
   border: 1px solid var(--border);
 }
 
+/* PAGE WRAPPER */
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+/* BUTTONS */
+.btn {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent-blue);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* FORMS */
+.form input {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-size: 14px;
+}
+
 /* ADMIN HOTSPOT */
 #adminHotspot {
   position: fixed;
@@ -141,4 +227,23 @@ body {
   overflow: hidden;
   border-right: 3px solid var(--accent-blue);
   width: 0;
+}
+
+/* FALLING PAPER */
+.falling-paper {
+  position: fixed;
+  width: 18px;
+  height: 22px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transform: rotate(-5deg);
+  z-index: 999;
+  pointer-events: none;
+  animation: fall 1.2s ease-out forwards;
+}
+
+@keyframes fall {
+  0% { opacity: 1; transform: translateY(0) rotate(-5deg); }
+  100% { opacity: 0; transform: translateY(80px) rotate(5deg); }
 }
