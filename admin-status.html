@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin – Update Client Status</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="st-logo">
+    <span class="st-s">S</span>
+    <span class="st-t">T</span>
+    <span class="st-dot-left"></span>
+    <span class="st-dot-top"></span>
+  </div>
+</header>
+
+<main class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar admin-sidebar">
+    <h3 class="sidebar-title">Admin Panel</h3>
+
+    <a href="admin.html">🏠 Dashboard</a>
+    <a href="admin-clients.html">👥 Clients</a>
+    <a href="admin-documents.html">📄 Documents</a>
+    <a href="admin-services.html">🛠️ Services</a>
+    <a href="admin-templates.html">📑 Templates</a>
+    <a href="admin-careers.html">📝 Applicants</a>
+    <a href="admin-status.html">📊 Status Updates</a>
+    <a href="admin-tax-year.html">📅 Tax Year</a>
+    <a href="admin-messages.html">💬 Messages</a>
+    <a href="admin-settings.html">⚙️ Settings</a>
+    <a href="#" id="adminLogout">🚪 Logout</a>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <section class="dashboard-main">
+
+    <h2>Update Client Status</h2>
+
+    <div class="card">
+      <h3>Change Status</h3>
+
+      <input id="clientEmail" placeholder="Client Email">
+
+      <select id="newStatus">
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Awaiting Documents">Awaiting Documents</option>
+        <option value="Completed">Completed</option>
+        <option value="Filed">Filed</option>
+        <option value="Refund Sent">Refund Sent</option>
+      </select>
+
+      <button id="updateBtn" class="btn">Update Status</button>
+
+      <p id="statusMsg" style="margin-top:12px;"></p>
+    </div>
+
+    <div class="card">
+      <h3>Recent Status Updates</h3>
+      <div id="recentStatusList">Loading...</div>
+    </div>
+
+  </section>
+
+</main>
+
+<script>
+// Logout
+document.getElementById("adminLogout").onclick = () => {
+  localStorage.removeItem("adminToken");
+  window.location.href = "index.html";
+};
+
+// Update status
+document.getElementById("updateBtn").onclick = async () => {
+  const email = document.getElementById("clientEmail").value.trim();
+  const status = document.getElementById("newStatus").value;
+
+  const res = await fetch("/api/admin/update-status", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ email, status })
+  });
+
+  const data = await res.json();
+  document.getElementById("statusMsg").textContent =
+    data.success ? "Status updated." : data.error;
+
+  if (data.success) loadRecent();
+};
+
+// Load recent updates
+async function loadRecent() {
+  const res = await fetch("/api/admin/status-log");
+  const list = await res.json();
+
+  document.getElementById("recentStatusList").innerHTML =
+    list.length === 0
+      ? "No recent updates."
+      : list.map(item => `
+          <div class="client-item">
+            <strong>${item.email}</strong><br>
+            Status: ${item.status}<br>
+            <small>${new Date(item.time).toLocaleString()}</small>
+          </div>
+        `).join("");
+}
+
+document.addEventListener("DOMContentLoaded", loadRecent);
+</script>
+
+</body>
+</html>
