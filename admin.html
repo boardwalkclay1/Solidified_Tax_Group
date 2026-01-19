@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Admin Dashboard - Solidified Tax Group</title>
+  <title>Admin – Solidified Tax Group</title>
   <link rel="stylesheet" href="styles/style.css" />
 </head>
 
@@ -17,108 +17,85 @@
   </div>
 </header>
 
-<main class="dashboard-layout">
+<main class="page">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar admin-sidebar">
-    <h3 class="sidebar-title">Admin Panel</h3>
+  <section class="card">
+    <h2>Admin Login</h2>
 
-    <a href="admin.html">🏠 Dashboard</a>
-    <a href="admin-clients.html">👥 Clients</a>
-    <a href="admin-documents.html">📄 Documents</a>
-    <a href="admin-services.html">🛠️ Services</a>
-    <a href="admin-templates.html">📑 Templates</a>
-    <a href="admin-careers.html">📝 Applicants</a>
-    <a href="admin-status.html">📊 Status Updates</a>
-    <a href="admin-tax-year.html">📅 Tax Year</a>
-    <a href="admin-messages.html">💬 Messages</a>
-    <a href="admin-settings.html">⚙️ Settings</a>
-    <a href="#" id="adminLogout">🚪 Logout</a>
-  </aside>
+    <form id="adminLoginForm">
+      <input name="username" placeholder="Admin Username" required>
+      <input name="password" type="password" placeholder="Password" required>
+      <button class="btn">Enter Admin</button>
+      <p id="adminMsg"></p>
+    </form>
+  </section>
 
-  <!-- MAIN CONTENT -->
-  <section class="dashboard-main">
-
-    <h2>Admin Dashboard</h2>
-
-    <!-- QUICK STATS -->
-    <div class="stats-grid">
-      <div class="stat-card">
-        <h3 id="statClients">0</h3>
-        <p>Clients</p>
-      </div>
-
-      <div class="stat-card">
-        <h3 id="statDocs">0</h3>
-        <p>Documents</p>
-      </div>
-
-      <div class="stat-card">
-        <h3 id="statApps">0</h3>
-        <p>Applicants</p>
-      </div>
-    </div>
-
-    <!-- ACTION GRID -->
-    <div class="action-grid">
-
-      <a class="action-item" href="admin-clients.html">
-        <span>👥</span>
-        <h4>Manage Clients</h4>
-      </a>
-
-      <a class="action-item" href="admin-documents.html">
-        <span>📄</span>
-        <h4>All Documents</h4>
-      </a>
-
-      <a class="action-item" href="admin-services.html">
-        <span>🛠️</span>
-        <h4>Services</h4>
-      </a>
-
-      <a class="action-item" href="admin-templates.html">
-        <span>📑</span>
-        <h4>Templates</h4>
-      </a>
-
-      <a class="action-item" href="admin-careers.html">
-        <span>📝</span>
-        <h4>Applicants</h4>
-      </a>
-
-      <a class="action-item" href="admin-status.html">
-        <span>📊</span>
-        <h4>Status Updates</h4>
-      </a>
-
-      <a class="action-item" href="admin-tax-year.html">
-        <span>📅</span>
-        <h4>Tax Year</h4>
-      </a>
-
-      <a class="action-item" href="admin-messages.html">
-        <span>💬</span>
-        <h4>Messages</h4>
-      </a>
-
-      <a class="action-item" href="admin-settings.html">
-        <span>⚙️</span>
-        <h4>Settings</h4>
-      </a>
-
-    </div>
-
+  <section class="card">
+    <h2>Clients & Documents</h2>
+    <div id="adminContent">Login required.</div>
   </section>
 
 </main>
 
 <script>
-  // Logout logic
-  document.getElementById("adminLogout").onclick = () => {
-    localStorage.removeItem("adminToken");
-    window.location.href = "index.html";
-  };
+document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const msg = document.getElementById("adminMsg");
+
+  const username = e.target.username.value;
+  const password = e.target.password.value;
+
+  const res = await fetch("/api/admin/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password })
+  });
+
+  const data = await res.json();
+
+  if (!data.success) {
+    msg.textContent = "Login failed.";
+    msg.style.color = "red";
+    return;
+  }
+
+  localStorage.setItem("adminToken", data.token);
+  msg.textContent = "Logged in.";
+  msg.style.color = "green";
+
+  loadAdmin();
+});
+
+async function loadAdmin() {
+  const token = localStorage.getItem("adminToken");
+  const container = document.getElementById("adminContent");
+
+  const res = await fetch("/api/admin/clients-with-docs", {
+    headers: { "Authorization": `Bearer ${token}` }
+  });
+
+  const clients = await res.json();
+
+  container.innerHTML = clients.map(c => `
+    <div class="card" style="margin-bottom:16px;">
+      <h3>${c.email}</h3>
+      <p>Name: ${c.name || "N/A"}</p>
+      <h4>Documents</h4>
+      ${
+        c.documents.length
+          ? c.documents.map(d => `
+              <div class="service-item">
+                <h4>${d.originalName}</h4>
+                <p>${new Date(d.uploadedAt).toLocaleDateString()}</p>
+                <button class="btn secondary" onclick="window.location.href='/uploads/${d.filename}'">Download</button>
+              </div>
+            `).join("")
+          : "<p>No documents.</p>"
+      }
+    </div>
+  `).join("");
+}
+
 </script>
 
 </body>
