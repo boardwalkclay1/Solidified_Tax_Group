@@ -1,0 +1,144 @@
+/* GLOBAL */
+:root {
+  --accent-blue: #2a62ff;
+  --border: #d0d0d0;
+  --text: #222;
+  --text-light: #555;
+  --card-bg: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f7f9ff;
+  cursor: url("../images/pencil-cursor.png"), auto;
+}
+
+/* TOPBAR */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar nav a {
+  margin-left: 16px;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #e6eeff, #ffffff);
+  border-radius: 20px;
+  margin: 24px;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* PAPER BUTTONS */
+.paper-btn {
+  display: block;
+  width: 180px;
+  padding: 20px;
+  border-radius: 12px;
+  background: #fff;
+  border: 2px solid var(--border);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  text-align: left;
+  text-decoration: none;
+  color: var(--text);
+  position: relative;
+  font-weight: 600;
+}
+
+.paper-btn .paper-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent-blue);
+  margin-bottom: 6px;
+}
+
+.paper-btn .paper-emoji {
+  font-size: 32px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* SERVICE CARDS */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.service-item {
+  display: block;
+  padding: 20px;
+  border-radius: 14px;
+  background: #fff;
+  border: 2px solid var(--border);
+  text-decoration: none;
+  color: var(--text);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.service-item .paper-emoji {
+  font-size: 28px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* CARD */
+.card {
+  background: #fff;
+  padding: 24px;
+  margin: 24px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+
+/* ADMIN HOTSPOT */
+#adminHotspot {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  z-index: 200;
+  background: transparent;
+}
+
+/* TYPEWRITER LOADER */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+#loaderText {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent-blue);
+  font-family: monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid var(--accent-blue);
+  width: 0;
+}
