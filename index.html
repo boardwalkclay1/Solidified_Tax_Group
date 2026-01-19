@@ -3,241 +3,131 @@
 <head>
   <meta charset="UTF-8" />
   <title>Solidified Tax Group</title>
-  <link rel="stylesheet" href="styles/style.css" />
-
-  <style>
-    /* ---------- PAPER BUTTONS ---------- */
-    .paper-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px 26px;
-      border-radius: 8px;
-      background: #ffffff;
-      border: 1px solid var(--border);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-      font-weight: 600;
-      color: var(--text);
-      text-decoration: none;
-    }
-
-    .paper-btn.secondary {
-      border-top: 4px solid var(--accent-blue);
-    }
-
-    /* ---------- HERO ---------- */
-    .hero {
-      text-align: center;
-      padding: 80px 20px;
-      background: linear-gradient(135deg, #e6eeff, #ffffff);
-      border-radius: 20px;
-      margin-bottom: 40px;
-    }
-
-    .hero h1 {
-      font-size: 40px;
-      color: var(--accent-blue);
-      margin-bottom: 10px;
-    }
-
-    .hero p {
-      font-size: 18px;
-      color: var(--text-light);
-      margin-bottom: 24px;
-    }
-
-    .hero-actions {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    /* ---------- SERVICE CARDS ---------- */
-    .service-item {
-      display: block;
-      border: 1px solid var(--border);
-      background: var(--card-bg);
-      border-radius: 14px;
-      padding: 20px;
-      text-decoration: none;
-      color: var(--text);
-    }
-
-    .service-item h3 {
-      color: var(--accent-blue);
-      margin-bottom: 6px;
-    }
-
-    .service-item p {
-      color: var(--text-light);
-      margin: 0;
-    }
-
-    /* ---------- PENCIL CURSOR ---------- */
-    body {
-      cursor: url("images/pencil-cursor.png"), auto;
-    }
-
-    /* ---------- FALLING PAPER ---------- */
-    .falling-paper {
-      position: fixed;
-      width: 18px;
-      height: 22px;
-      background: #ffffff;
-      border: 1px solid var(--border);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      transform: rotate(-5deg);
-      z-index: 999;
-      pointer-events: none;
-      animation: fall 1.2s ease-out forwards;
-    }
-
-    @keyframes fall {
-      0% { opacity: 1; transform: translateY(0) rotate(-5deg); }
-      100% { opacity: 0; transform: translateY(80px) rotate(5deg); }
-    }
-  </style>
+  <link rel="stylesheet" href="styles/index.css" />
 </head>
 
 <body>
 
-  <!-- TOP‑RIGHT ADMIN HOTSPOT (WORKS, DOESN’T BLOCK BUTTONS) -->
-  <div id="adminHotspot" style="
-    position:fixed;
-    top:0;
-    right:0;
-    width:60px;
-    height:60px;
-    z-index:200;
-    background:transparent;
-  "></div>
+<!-- TYPEWRITER LOADING SCREEN -->
+<div id="loader">
+  <div id="loaderText"></div>
+</div>
 
-  <header class="topbar">
-    <div class="st-logo">
-      <span class="st-s">S</span>
-      <span class="st-t">T</span>
-      <span class="st-dot-left"></span>
-      <span class="st-dot-top"></span>
+<!-- TOP‑RIGHT ADMIN HOTSPOT -->
+<div id="adminHotspot"></div>
+
+<header class="topbar">
+  <div class="st-logo">
+    <span class="st-s">S</span>
+    <span class="st-t">T</span>
+    <span class="st-dot-left"></span>
+    <span class="st-dot-top"></span>
+  </div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="client.html">Client Portal</a>
+    <a href="client-intake.html">Client Intake</a>
+    <a href="contact.html">Contact</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+  </nav>
+</header>
+
+<main class="page">
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Solidified Tax Group</h1>
+    <p>Precision tax preparation, secure documents, and a modern client experience.</p>
+
+    <div class="hero-actions">
+
+      <a class="paper-btn" href="client.html">
+        <span class="paper-title">Client Portal</span>
+        <span class="paper-emoji">🗂️</span>
+        Enter Client Portal
+      </a>
+
+      <a class="paper-btn secondary" href="contact.html">
+        <span class="paper-title">Consultation</span>
+        <span class="paper-emoji">📞</span>
+        Schedule a Consultation
+      </a>
+
+      <a class="paper-btn" href="client-intake.html">
+        <span class="paper-title">Client Intake</span>
+        <span class="paper-emoji">📝</span>
+        Start Client Intake
+      </a>
+
     </div>
+  </section>
 
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="client.html">Client Portal</a>
-      <a href="client-intake.html">Client Intake</a>
-      <a href="contact.html">Contact</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-    </nav>
-  </header>
+  <!-- SERVICES -->
+  <section class="card">
+    <h2>Our Services</h2>
 
-  <main class="page">
+    <div class="service-grid">
 
-    <!-- HERO -->
-    <section class="hero">
-      <h1>Solidified Tax Group</h1>
-      <p>Precision tax preparation, secure documents, and a modern client experience.</p>
+      <a class="service-item" href="client.html" data-service="personal-tax">
+        <span class="paper-emoji">🧾</span>
+        <h3>Personal Tax Preparation</h3>
+        <p>1040 filing, W‑2s, 1099s, dependents, credits, deductions.</p>
+      </a>
 
-      <div class="hero-actions">
-        <a class="paper-btn" href="client.html">Enter Client Portal</a>
-        <a class="paper-btn secondary" href="contact.html">Schedule a Consultation</a>
-        <a class="paper-btn" href="client-intake.html">Start Client Intake</a>
-      </div>
-    </section>
+      <a class="service-item" href="client.html" data-service="business-tax">
+        <span class="paper-emoji">💼</span>
+        <h3>Business Tax Preparation</h3>
+        <p>LLC, S‑Corp, C‑Corp, Schedule C, quarterly filings.</p>
+      </a>
 
-    <!-- SERVICES -->
-    <section class="card">
-      <h2>Our Services</h2>
+      <a class="service-item" href="client.html" data-service="amendments">
+        <span class="paper-emoji">✏️</span>
+        <h3>Tax Amendments</h3>
+        <p>Fix past returns, correct errors, claim missed refunds.</p>
+      </a>
 
-      <div class="service-grid">
+      <a class="service-item" href="client.html" data-service="document-upload">
+        <span class="paper-emoji">📤</span>
+        <h3>Document Upload</h3>
+        <p>Securely upload IDs, W‑2s, 1099s, and tax forms.</p>
+      </a>
 
-        <a class="service-item" href="client.html" data-service="personal-tax">
-          <h3>Personal Tax Preparation</h3>
-          <p>1040 filing, W‑2s, 1099s, dependents, credits, deductions.</p>
-        </a>
+      <a class="service-item" href="client.html" data-service="sign-documents">
+        <span class="paper-emoji">✍️</span>
+        <h3>Sign Documents</h3>
+        <p>Digitally sign tax forms and authorization documents.</p>
+      </a>
 
-        <a class="service-item" href="client.html" data-service="business-tax">
-          <h3>Business Tax Preparation</h3>
-          <p>LLC, S‑Corp, C‑Corp, Schedule C, quarterly filings.</p>
-        </a>
+      <a class="service-item" href="client.html" data-service="refund-status">
+        <span class="paper-emoji">💸</span>
+        <h3>Refund Status</h3>
+        <p>Track your tax return progress and refund updates.</p>
+      </a>
 
-        <a class="service-item" href="client.html" data-service="amendments">
-          <h3>Tax Amendments</h3>
-          <p>Fix past returns, correct errors, claim missed refunds.</p>
-        </a>
+      <a class="service-item" href="client-intake.html">
+        <span class="paper-emoji">📝</span>
+        <h3>Client Intake Form</h3>
+        <p>Start your tax intake and upload required documents.</p>
+      </a>
 
-        <a class="service-item" href="client.html" data-service="document-upload">
-          <h3>Document Upload</h3>
-          <p>Securely upload IDs, W‑2s, 1099s, and tax forms.</p>
-        </a>
+    </div>
+  </section>
 
-        <a class="service-item" href="client.html" data-service="sign-documents">
-          <h3>Sign Documents</h3>
-          <p>Digitally sign tax forms and authorization documents.</p>
-        </a>
+  <!-- HOW IT WORKS -->
+  <section class="card">
+    <h2>How It Works</h2>
+    <ol>
+      <li><strong>Secure Access:</strong> Log in with your email, phone, and password.</li>
+      <li><strong>Upload Documents:</strong> ID, Social Security card, income forms, and more.</li>
+      <li><strong>Review & Sign:</strong> Receive documents digitally, sign online or upload.</li>
+    </ol>
+  </section>
 
-        <a class="service-item" href="client.html" data-service="refund-status">
-          <h3>Refund Status</h3>
-          <p>Track your tax return progress and refund updates.</p>
-        </a>
+</main>
 
-        <a class="service-item" href="client-intake.html">
-          <h3>Client Intake Form</h3>
-          <p>Start your tax intake and upload required documents.</p>
-        </a>
-
-      </div>
-    </section>
-
-    <!-- HOW IT WORKS -->
-    <section class="card">
-      <h2>How It Works</h2>
-      <ol>
-        <li><strong>Secure Access:</strong> Log in with your email, phone, and password.</li>
-        <li><strong>Upload Documents:</strong> ID, Social Security card, income forms, and more.</li>
-        <li><strong>Review & Sign:</strong> Receive documents digitally, sign online or upload.</li>
-      </ol>
-    </section>
-
-  </main>
-
-  <!-- JS -->
-  <script>
-    /* STORE SELECTED SERVICE */
-    document.querySelectorAll(".service-item[data-service]").forEach(item => {
-      item.addEventListener("click", () => {
-        localStorage.setItem("selectedService", item.getAttribute("data-service"));
-      });
-    });
-
-    /* ADMIN HOTSPOT (TOP‑RIGHT) */
-    let taps = 0;
-    let timer = null;
-    document.getElementById("adminHotspot").addEventListener("click", () => {
-      taps++;
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => taps = 0, 800);
-      if (taps === 4) window.location.href = "admin.html";
-    });
-
-    /* FALLING PAPER */
-    function spawnPaper(x, y) {
-      const paper = document.createElement("div");
-      paper.className = "falling-paper";
-      paper.style.left = x + "px";
-      paper.style.top = y + "px";
-      document.body.appendChild(paper);
-      setTimeout(() => paper.remove(), 1200);
-    }
-
-    document.addEventListener("mousemove", e => {
-      if (Math.random() < 0.05) spawnPaper(e.clientX, e.clientY);
-    });
-
-    document.addEventListener("click", e => {
-      spawnPaper(e.clientX, e.clientY);
-    });
-  </script>
+<script src="js/index.js"></script>
 
 </body>
 </html>
