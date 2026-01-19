@@ -15,12 +15,24 @@
     <span class="st-dot-left"></span>
     <span class="st-dot-top"></span>
   </div>
+
+  <nav class="admin-nav">
+    <a href="admin.html">Dashboard</a>
+    <a href="admin-documents.html">Documents</a>
+    <a href="admin-services.html">Services</a>
+    <a href="admin-templates.html">Templates</a>
+    <a href="admin-applicants.html">Applicants</a>
+    <a href="admin-status.html">Status Updates</a>
+    <a href="admin-taxyear.html">Tax Year</a>
+    <a href="admin-messages.html">Messages</a>
+    <a href="admin-settings.html">Settings</a>
+    <a href="#" id="logoutBtn" style="color:red;">Logout</a>
+  </nav>
 </header>
 
 <main class="page">
 
-  <!-- LOGIN CARD -->
-  <section class="card" id="loginCard">
+  <section class="card">
     <h2>Admin Login</h2>
 
     <form id="adminLoginForm">
@@ -31,7 +43,6 @@
     </form>
   </section>
 
-  <!-- ADMIN CONTENT -->
   <section class="card">
     <h2>Clients & Documents</h2>
     <div id="adminContent">Login required.</div>
@@ -40,49 +51,14 @@
 </main>
 
 <script>
-/* ============================================================
-   SUPERADMIN OVERRIDE (NO LOCAL STORAGE REQUIRED)
-   ============================================================ */
-
-const SUPERADMIN_USERNAME = "boardwalkclay1@gmail.com";
-const SUPERADMIN_PASSWORD = "admin"; // You can change this
-
-// If the superadmin visits the page, auto-login instantly
-function autoSuperAdmin() {
-  // Hard-coded instant access
-  localStorage.setItem("adminToken", "SUPERADMIN");
-
-  // Hide login form
-  document.getElementById("loginCard").style.display = "none";
-
-  // Load admin data
-  loadAdmin();
-}
-
-// Trigger auto-login for superadmin
-autoSuperAdmin();
-
-
-/* ============================================================
-   NORMAL ADMIN LOGIN (FOR OTHER ADMINS)
-   ============================================================ */
-
+/* LOGIN HANDLER */
 document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const msg = document.getElementById("adminMsg");
 
-  const username = e.target.username.value.trim();
-  const password = e.target.password.value.trim();
+  const username = e.target.username.value;
+  const password = e.target.password.value;
 
-  // SUPERADMIN LOGIN (manual)
-  if (username === SUPERADMIN_USERNAME && password === SUPERADMIN_PASSWORD) {
-    localStorage.setItem("adminToken", "SUPERADMIN");
-    document.getElementById("loginCard").style.display = "none";
-    loadAdmin();
-    return;
-  }
-
-  // NORMAL ADMIN LOGIN
   const res = await fetch("/api/admin/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -101,15 +77,10 @@ document.getElementById("adminLoginForm").addEventListener("submit", async (e) =
   msg.textContent = "Logged in.";
   msg.style.color = "green";
 
-  document.getElementById("loginCard").style.display = "none";
   loadAdmin();
 });
 
-
-/* ============================================================
-   LOAD ADMIN DATA
-   ============================================================ */
-
+/* LOAD ADMIN DATA */
 async function loadAdmin() {
   const token = localStorage.getItem("adminToken");
   const container = document.getElementById("adminContent");
@@ -118,8 +89,6 @@ async function loadAdmin() {
     container.textContent = "Login required.";
     return;
   }
-
-  container.textContent = "Loading...";
 
   const res = await fetch("/api/admin/clients-with-docs", {
     headers: { "Authorization": `Bearer ${token}` }
@@ -147,6 +116,11 @@ async function loadAdmin() {
   `).join("");
 }
 
+/* LOGOUT */
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  localStorage.removeItem("adminToken");
+  window.location.href = "admin.html";
+});
 </script>
 
 </body>
