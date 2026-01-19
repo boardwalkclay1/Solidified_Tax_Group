@@ -2,77 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Your Documents - Solidified Tax Group</title>
+  <title>Your Documents – Solidified Tax Group</title>
   <link rel="stylesheet" href="styles/style.css" />
 </head>
 
 <body>
 
-  <header class="topbar">
-    <div class="st-logo">
-      <span class="st-s">S</span>
-      <span class="st-t">T</span>
-      <span class="st-dot-left"></span>
-      <span class="st-dot-top"></span>
+<header class="topbar">
+  <div class="st-logo">
+    <span class="st-s">S</span>
+    <span class="st-t">T</span>
+    <span class="st-dot-left"></span>
+    <span class="st-dot-top"></span>
+  </div>
+</header>
+
+<main class="dashboard-layout">
+
+  <aside class="sidebar">
+    <h3 class="sidebar-title">Client Menu</h3>
+    <a href="client-dashboard.html">🏠 Dashboard</a>
+    <a href="client-documents.html">📄 Documents</a>
+    <a href="client-upload.html">⬆️ Upload</a>
+    <a href="client-sign.html">✍️ Sign Docs</a>
+    <a href="client-sign-history.html">🗂️ Signed History</a>
+    <a href="client-status.html">📊 Tax Status</a>
+    <a href="client-profile.html">👤 Profile</a>
+  </aside>
+
+  <section class="dashboard-main">
+
+    <h2>Your Documents</h2>
+    <p>All uploaded, signed, and generated documents appear here.</p>
+
+    <div id="docsList" class="docs-grid">Loading...</div>
+
+  </section>
+
+</main>
+
+<script>
+async function loadDocs() {
+  const email = localStorage.getItem("clientEmail");
+  const container = document.getElementById("docsList");
+
+  const res = await fetch(`/api/client/documents?email=${email}`);
+  const docs = await res.json();
+
+  if (!docs.length) {
+    container.textContent = "No documents yet.";
+    return;
+  }
+
+  container.innerHTML = docs.map(d => `
+    <div class="doc-card">
+      <h4>${d.originalName}</h4>
+      <p>Uploaded: ${new Date(d.uploadedAt).toLocaleDateString()}</p>
+      <button class="btn secondary" onclick="window.location.href='/uploads/${d.filename}'">Download</button>
     </div>
+  `).join("");
+}
 
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="client.html">Client Login</a>
-      <a href="client-dashboard.html">Dashboard</a>
-      <a href="client-documents.html">Documents</a>
-    </nav>
-
-    <button class="theme-toggle" id="themeToggle">Theme</button>
-  </header>
-
-  <main class="page">
-
-    <section class="card">
-      <h2>Your Documents</h2>
-      <div id="clientDocsList">Loading documents...</div>
-    </section>
-
-  </main>
-
-  <script src="js/main.js"></script>
-  <script>
-    const API_BASE = "/api";
-
-    document.addEventListener("DOMContentLoaded", () => {
-      const clientId = localStorage.getItem("clientId");
-      if (!clientId) {
-        window.location.href = "client.html";
-        return;
-      }
-      loadClientDocuments(clientId);
-    });
-
-    async function loadClientDocuments(clientId) {
-      const container = document.getElementById("clientDocsList");
-
-      try {
-        const res = await fetch(`${API_BASE}/clients/${clientId}/documents`);
-        const docs = await res.json();
-
-        if (!docs.length) {
-          container.textContent = "No documents uploaded yet.";
-          return;
-        }
-
-        container.innerHTML = docs.map(d => `
-          <div class="doc-item">
-            <strong>${d.originalName || "Document #" + d.id}</strong><br>
-            Uploaded: ${new Date(d.uploadedAt).toLocaleString()}<br>
-            ${d.signedAt ? `<span class="badge">Signed</span>` : ""}
-          </div>
-        `).join("");
-
-      } catch {
-        container.textContent = "Unable to load documents.";
-      }
-    }
-  </script>
+document.addEventListener("DOMContentLoaded", loadDocs);
+</script>
 
 </body>
 </html>
