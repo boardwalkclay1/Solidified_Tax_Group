@@ -32,7 +32,8 @@
 
 <main class="page">
 
-  <section class="card">
+  <!-- LOGIN CARD -->
+  <section class="card" id="loginCard">
     <h2>Admin Login</h2>
 
     <form id="adminLoginForm">
@@ -43,6 +44,7 @@
     </form>
   </section>
 
+  <!-- ADMIN CONTENT -->
   <section class="card">
     <h2>Clients & Documents</h2>
     <div id="adminContent">Login required.</div>
@@ -51,14 +53,45 @@
 </main>
 
 <script>
-/* LOGIN HANDLER */
+/* ============================================================
+   SUPERADMIN AUTO-ACCESS (NO LOGIN REQUIRED)
+   ============================================================ */
+
+const SUPERADMIN_USERNAME = "boardwalkclay1@gmail.com";
+
+// Auto-login the superadmin instantly
+(function autoSuperAdmin() {
+  localStorage.setItem("adminToken", "SUPERADMIN");
+
+  // Hide login form
+  const loginCard = document.getElementById("loginCard");
+  if (loginCard) loginCard.style.display = "none";
+
+  // Load admin dashboard immediately
+  loadAdmin();
+})();
+
+
+/* ============================================================
+   NORMAL ADMIN LOGIN (FOR OTHER ADMINS)
+   ============================================================ */
+
 document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const msg = document.getElementById("adminMsg");
 
-  const username = e.target.username.value;
-  const password = e.target.password.value;
+  const username = e.target.username.value.trim();
+  const password = e.target.password.value.trim();
 
+  // SUPERADMIN MANUAL LOGIN (optional)
+  if (username === SUPERADMIN_USERNAME) {
+    localStorage.setItem("adminToken", "SUPERADMIN");
+    document.getElementById("loginCard").style.display = "none";
+    loadAdmin();
+    return;
+  }
+
+  // NORMAL ADMIN LOGIN
   const res = await fetch("/api/admin/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -77,10 +110,15 @@ document.getElementById("adminLoginForm").addEventListener("submit", async (e) =
   msg.textContent = "Logged in.";
   msg.style.color = "green";
 
+  document.getElementById("loginCard").style.display = "none";
   loadAdmin();
 });
 
-/* LOAD ADMIN DATA */
+
+/* ============================================================
+   LOAD ADMIN DATA
+   ============================================================ */
+
 async function loadAdmin() {
   const token = localStorage.getItem("adminToken");
   const container = document.getElementById("adminContent");
@@ -89,6 +127,8 @@ async function loadAdmin() {
     container.textContent = "Login required.";
     return;
   }
+
+  container.textContent = "Loading...";
 
   const res = await fetch("/api/admin/clients-with-docs", {
     headers: { "Authorization": `Bearer ${token}` }
@@ -116,7 +156,11 @@ async function loadAdmin() {
   `).join("");
 }
 
-/* LOGOUT */
+
+/* ============================================================
+   LOGOUT
+   ============================================================ */
+
 document.getElementById("logoutBtn").addEventListener("click", () => {
   localStorage.removeItem("adminToken");
   window.location.href = "admin.html";
