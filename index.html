@@ -6,112 +6,73 @@
   <link rel="stylesheet" href="styles/style.css" />
 
   <style>
-    /* ---------------- LOADING SCREEN ---------------- */
-    #loader {
-      position: fixed;
-      inset: 0;
-      background: #fdf2f8; /* soft pink */
-      display: flex;
+    /* ---------- PAPER BUTTONS ---------- */
+    .paper-btn {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      flex-direction: column;
-      z-index: 9999;
-      font-family: "Courier New", monospace;
-      color: #d63384;
-    }
-
-    .typewriter {
-      overflow: hidden;
-      border-right: 3px solid #d63384;
-      white-space: nowrap;
-      width: 0;
-      animation: typing 2.5s steps(40, end) forwards,
-                 blink .7s infinite;
-      font-size: 22px;
-      margin-bottom: 20px;
-    }
-
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 320px }
-    }
-
-    @keyframes blink {
-      50% { border-color: transparent }
-    }
-
-    .page-shoot {
-      width: 40px;
-      height: 50px;
-      background: white;
-      border: 2px solid #d63384;
-      border-radius: 4px;
-      animation: shoot 0.8s ease-out infinite;
-      opacity: 0;
-    }
-
-    @keyframes shoot {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(-120px); opacity: 0; }
-    }
-
-    /* ---------------- PRETTY BUTTONS ---------------- */
-    .btn {
-      padding: 10px 22px;
-      border-radius: 30px;
-      font-size: 15px;
+      padding: 12px 26px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
       font-weight: 600;
-      background: #d63384;
-      color: white;
-      border: none;
-      transition: 0.25s ease;
+      color: var(--text);
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: 0.2s ease;
     }
 
-    .btn:hover {
-      background: #b82a6f;
-      transform: translateY(-2px);
+    .paper-btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-top: 4px solid var(--accent-yellow);
+      opacity: 0.9;
     }
 
-    .btn.secondary {
-      background: #ffd6e7;
-      color: #b82a6f;
+    .paper-btn:hover {
+      transform: translateY(-2px) rotate(-1deg);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.16);
     }
 
-    .btn.secondary:hover {
-      background: #ffcae0;
+    .paper-btn.secondary {
+      border-top-color: var(--accent-blue);
     }
 
-    /* ---------------- GIRLY HERO ---------------- */
+    /* ---------- HERO ---------- */
     .hero {
       text-align: center;
       padding: 80px 20px;
-      background: linear-gradient(135deg, #ffe6f2, #fff);
+      background: linear-gradient(135deg, #e6eeff, #fff);
       border-radius: 20px;
       margin-bottom: 40px;
     }
 
     .hero h1 {
-      font-size: 42px;
-      color: #b82a6f;
+      font-size: 40px;
+      color: var(--accent-blue);
       margin-bottom: 10px;
     }
 
     .hero p {
       font-size: 18px;
-      color: #7a3d57;
-      margin-bottom: 25px;
+      color: var(--text-light);
+      margin-bottom: 24px;
     }
 
     .hero-actions {
       display: flex;
       justify-content: center;
-      gap: 15px;
+      gap: 16px;
+      flex-wrap: wrap;
     }
 
-    /* ---------------- SERVICE CARDS ---------------- */
+    /* ---------- SERVICE CARDS ---------- */
     .service-item {
-      border: 1px solid #ffd6e7;
-      background: #fff7fb;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
       border-radius: 14px;
       padding: 20px;
       cursor: pointer;
@@ -120,26 +81,44 @@
 
     .service-item:hover {
       transform: translateY(-4px);
-      box-shadow: 0 10px 25px rgba(255, 182, 216, 0.4);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
 
     .service-item h3 {
-      color: #b82a6f;
+      color: var(--accent-blue);
     }
 
     .service-item p {
-      color: #7a3d57;
+      color: var(--text-light);
+    }
+
+    /* ---------- PENCIL CURSOR ---------- */
+    body {
+      cursor: url("images/pencil-cursor.png"), auto; /* supply this asset */
+    }
+
+    /* ---------- FALLING PAPER ---------- */
+    .falling-paper {
+      position: fixed;
+      width: 18px;
+      height: 22px;
+      background: #fff;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transform: rotate(-5deg);
+      z-index: 999;
+      pointer-events: none;
+      animation: fall 1.2s ease-out forwards;
+    }
+
+    @keyframes fall {
+      0% { opacity: 1; transform: translateY(0) rotate(-5deg); }
+      100% { opacity: 0; transform: translateY(80px) rotate(5deg); }
     }
   </style>
 </head>
 
 <body>
-
-  <!-- ---------------- LOADING SCREEN ---------------- -->
-  <div id="loader">
-    <div class="typewriter">Preparing your experience...</div>
-    <div class="page-shoot"></div>
-  </div>
 
   <!-- Invisible 4‑tap admin hotspot -->
   <div id="adminHotspot" style="position:fixed; inset:0; z-index:200; background:transparent;"></div>
@@ -166,11 +145,11 @@
     <!-- HERO -->
     <section class="hero">
       <h1>Solidified Tax Group</h1>
-      <p>Professional tax preparation with a soft, modern touch.</p>
+      <p>Precision tax preparation, secure documents, and a modern client experience.</p>
 
       <div class="hero-actions">
-        <a class="btn" href="client.html">Enter Client Portal</a>
-        <a class="btn secondary" href="contact.html">Schedule a Consultation</a>
+        <a class="paper-btn" href="client.html" id="enterPortalBtn">Enter Client Portal</a>
+        <a class="paper-btn secondary" href="contact.html" id="scheduleBtn">Schedule a Consultation</a>
       </div>
     </section>
 
@@ -213,18 +192,20 @@
       </div>
     </section>
 
+    <!-- HOW IT WORKS -->
+    <section class="card">
+      <h2>How It Works</h2>
+      <ol>
+        <li><strong>Secure Access:</strong> Log in with your email, phone, and password.</li>
+        <li><strong>Upload Documents:</strong> ID, Social Security card, income forms, and more.</li>
+        <li><strong>Review & Sign:</strong> Receive documents digitally, sign online or upload.</li>
+      </ol>
+    </section>
+
   </main>
 
   <script>
-    /* ---------------- REMOVE LOADER ---------------- */
-    window.onload = () => {
-      setTimeout(() => {
-        document.getElementById("loader").style.opacity = "0";
-        setTimeout(() => document.getElementById("loader").remove(), 400);
-      }, 1800);
-    };
-
-    /* ---------------- ADMIN HOTSPOT ---------------- */
+    /* ---------- ADMIN HOTSPOT ---------- */
     document.addEventListener("DOMContentLoaded", () => {
       let taps = 0;
       let timer = null;
@@ -237,11 +218,31 @@
       });
     });
 
-    /* ---------------- SERVICE ROUTER ---------------- */
+    /* ---------- SERVICE ROUTER ---------- */
     function openService(service) {
       localStorage.setItem("selectedService", service);
       window.location.href = "client.html";
     }
+
+    /* ---------- FALLING PAPER EFFECT ---------- */
+    function spawnPaper(x, y) {
+      const paper = document.createElement("div");
+      paper.className = "falling-paper";
+      paper.style.left = x + "px";
+      paper.style.top = y + "px";
+      document.body.appendChild(paper);
+      setTimeout(() => paper.remove(), 1200);
+    }
+
+    document.addEventListener("mousemove", (e) => {
+      if (Math.random() < 0.05) {
+        spawnPaper(e.clientX, e.clientY);
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      spawnPaper(e.clientX, e.clientY);
+    });
   </script>
 
 </body>
