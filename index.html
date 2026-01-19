@@ -13,7 +13,7 @@
       justify-content: center;
       padding: 12px 26px;
       border-radius: 8px;
-      background: #fff;
+      background: #ffffff;
       border: 1px solid var(--border);
       box-shadow: 0 4px 10px rgba(0,0,0,0.08);
       font-weight: 600;
@@ -45,7 +45,7 @@
     .hero {
       text-align: center;
       padding: 80px 20px;
-      background: linear-gradient(135deg, #e6eeff, #fff);
+      background: linear-gradient(135deg, #e6eeff, #ffffff);
       border-radius: 20px;
       margin-bottom: 40px;
     }
@@ -94,7 +94,7 @@
 
     /* ---------- PENCIL CURSOR ---------- */
     body {
-      cursor: url("images/pencil-cursor.png"), auto; /* make sure this file exists */
+      cursor: url("images/pencil-cursor.png"), auto;
     }
 
     /* ---------- FALLING PAPER ---------- */
@@ -102,7 +102,7 @@
       position: fixed;
       width: 18px;
       height: 22px;
-      background: #fff;
+      background: #ffffff;
       border: 1px solid var(--border);
       box-shadow: 0 4px 10px rgba(0,0,0,0.15);
       transform: rotate(-5deg);
@@ -134,6 +134,7 @@
     <nav>
       <a href="index.html">Home</a>
       <a href="client.html">Client Portal</a>
+      <a href="client-intake.html">Client Intake</a>
       <a href="contact.html">Contact</a>
       <a href="privacy.html">Privacy</a>
       <a href="terms.html">Terms</a>
@@ -148,8 +149,9 @@
       <p>Precision tax preparation, secure documents, and a modern client experience.</p>
 
       <div class="hero-actions">
-        <a class="paper-btn" href="client.html" id="enterPortalBtn">Enter Client Portal</a>
-        <a class="paper-btn secondary" href="contact.html" id="scheduleBtn">Schedule a Consultation</a>
+        <a class="paper-btn" href="client.html">Enter Client Portal</a>
+        <a class="paper-btn secondary" href="contact.html">Schedule a Consultation</a>
+        <a class="paper-btn" href="client-intake.html">Start Client Intake</a>
       </div>
     </section>
 
@@ -189,6 +191,11 @@
           <p>Track your tax return progress and refund updates.</p>
         </div>
 
+        <div class="service-item" onclick="window.location.href='client-intake.html'">
+          <h3>Client Intake Form</h3>
+          <p>Start your tax intake and upload required documents.</p>
+        </div>
+
       </div>
     </section>
 
@@ -206,26 +213,24 @@
 
   <!-- ALL WIRING LIVES HERE -->
   <script>
-    /* ---------- SERVICE ROUTER (USED BY SERVICE CARDS) ---------- */
+    /* ---------- SERVICE ROUTER ---------- */
     function openService(service) {
       localStorage.setItem("selectedService", service);
       window.location.href = "client.html";
     }
 
-    /* ---------- ADMIN HOTSPOT (4 TAPS) ---------- */
+    /* ---------- ADMIN HOTSPOT ---------- */
     document.addEventListener("DOMContentLoaded", () => {
       let taps = 0;
       let timer = null;
 
       const hotspot = document.getElementById("adminHotspot");
-      if (hotspot) {
-        hotspot.addEventListener("click", () => {
-          taps++;
-          if (timer) clearTimeout(timer);
-          timer = setTimeout(() => taps = 0, 800);
-          if (taps === 4) window.location.href = "admin.html";
-        });
-      }
+      hotspot.addEventListener("click", () => {
+        taps++;
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => taps = 0, 800);
+        if (taps === 4) window.location.href = "admin.html";
+      });
     });
 
     /* ---------- FALLING PAPER EFFECT ---------- */
@@ -239,9 +244,7 @@
     }
 
     document.addEventListener("mousemove", (e) => {
-      if (Math.random() < 0.05) {
-        spawnPaper(e.clientX, e.clientY);
-      }
+      if (Math.random() < 0.05) spawnPaper(e.clientX, e.clientY);
     });
 
     document.addEventListener("click", (e) => {
