@@ -1,4 +1,3 @@
-/* GLOBAL */
 :root {
   --accent-blue: #2a62ff;
   --border: #d0d0d0;
@@ -31,7 +30,7 @@ body {
   font-weight: 600;
 }
 
-/* ST LOGO — FIXED EXACTLY AS REQUESTED */
+/* ST LOGO — FINAL COLORS + DOTS */
 .st-logo {
   position: relative;
   display: flex;
@@ -41,25 +40,22 @@ body {
   letter-spacing: -2px;
 }
 
-/* S = Yellow */
 .st-logo .st-s {
   font-size: 34px;
   margin-right: 2px;
   color: #f7b500;
   position: relative;
-  top: 1px; /* slight natural offset */
+  top: 1px;
 }
 
-/* T = Blue */
 .st-logo .st-t {
   font-size: 34px;
   margin-left: 2px;
   color: #0055ff;
   position: relative;
-  top: -1px; /* slight natural offset */
+  top: -1px;
 }
 
-/* Black dot beside S */
 .st-logo .st-dot-left {
   position: absolute;
   left: -12px;
@@ -71,7 +67,6 @@ body {
   transform: translateY(-50%);
 }
 
-/* Yellow dot above T */
 .st-logo .st-dot-top {
   position: absolute;
   top: -12px;
@@ -143,114 +138,3 @@ body {
 .service-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-  padding: 20px;
-}
-
-.service-item {
-  display: block;
-  padding: 20px;
-  border-radius: 14px;
-  background: #fff;
-  border: 2px solid var(--border);
-  text-decoration: none;
-  color: var(--text);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-}
-
-.service-item .paper-emoji {
-  font-size: 28px;
-  margin-bottom: 6px;
-  display: block;
-}
-
-/* CARD */
-.card {
-  background: #fff;
-  padding: 24px;
-  margin: 24px;
-  border-radius: 16px;
-  border: 1px solid var(--border);
-}
-
-/* PAGE WRAPPER */
-.page {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding-bottom: 40px;
-}
-
-/* BUTTONS */
-.btn {
-  display: inline-block;
-  padding: 10px 18px;
-  border-radius: 8px;
-  border: none;
-  background: var(--accent-blue);
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-/* FORMS */
-.form input {
-  display: block;
-  width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  font-size: 14px;
-}
-
-/* ADMIN HOTSPOT */
-#adminHotspot {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 60px;
-  height: 60px;
-  z-index: 200;
-  background: transparent;
-}
-
-/* TYPEWRITER LOADER */
-#loader {
-  position: fixed;
-  inset: 0;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 99999;
-}
-
-#loaderText {
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--accent-blue);
-  font-family: monospace;
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 3px solid var(--accent-blue);
-  width: 0;
-}
-
-/* FALLING PAPER */
-.falling-paper {
-  position: fixed;
-  width: 18px;
-  height: 22px;
-  background: #ffffff;
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  transform: rotate(-5deg);
-  z-index: 999;
-  pointer-events: none;
-  animation: fall 1.2s ease-out forwards;
-}
-
-@keyframes fall {
-  0% { opacity: 1; transform: translateY(0) rotate(-5deg); }
-  100% { opacity: 0; transform: translateY(80px) rotate(5deg); }
-}
