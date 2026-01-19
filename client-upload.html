@@ -2,94 +2,75 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Upload Documents - Solidified Tax Group</title>
+  <title>Upload Documents – Solidified Tax Group</title>
   <link rel="stylesheet" href="styles/style.css" />
 </head>
 
 <body>
 
-  <header class="topbar">
-    <div class="st-logo">
-      <span class="st-s">S</span>
-      <span class="st-t">T</span>
-      <span class="st-dot-left"></span>
-      <span class="st-dot-top"></span>
-    </div>
+<header class="topbar">
+  <div class="st-logo">
+    <span class="st-s">S</span>
+    <span class="st-t">T</span>
+    <span class="st-dot-left"></span>
+    <span class="st-dot-top"></span>
+  </div>
+</header>
 
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="client.html">Client Login</a>
-      <a href="client-dashboard.html">Dashboard</a>
-      <a href="client-upload.html">Upload</a>
-    </nav>
+<main class="dashboard-layout">
 
-    <button class="theme-toggle" id="themeToggle">Theme</button>
-  </header>
+  <aside class="sidebar">
+    <h3 class="sidebar-title">Client Menu</h3>
+    <a href="client-dashboard.html">🏠 Dashboard</a>
+    <a href="client-documents.html">📄 Documents</a>
+    <a href="client-upload.html">⬆️ Upload</a>
+    <a href="client-sign.html">✍️ Sign Docs</a>
+    <a href="client-status.html">📊 Tax Status</a>
+  </aside>
 
-  <main class="page">
+  <section class="dashboard-main">
 
-    <section class="card">
-      <h2>Upload Documents</h2>
-      <p>Select a file to upload securely to your account.</p>
+    <h2>Upload Documents</h2>
+    <p>Upload IDs, W‑2s, 1099s, proof of residency, and more.</p>
 
-      <input type="file" id="uploadFile" />
-      <button id="uploadBtn" class="btn">Upload</button>
+    <form id="uploadForm" enctype="multipart/form-data">
+      <input type="file" name="files" multiple required>
+      <button class="btn" type="submit">Upload</button>
+      <p id="uploadMsg"></p>
+    </form>
 
-      <p id="uploadStatus" style="margin-top:12px;"></p>
-    </section>
+  </section>
 
-  </main>
+</main>
 
-  <script src="js/main.js"></script>
-  <script>
-    const API_BASE = "/api";
+<script>
+document.getElementById("uploadForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const msg = document.getElementById("uploadMsg");
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const clientId = localStorage.getItem("clientId");
-      if (!clientId) {
-        window.location.href = "client.html";
-        return;
-      }
+  const email = localStorage.getItem("clientEmail");
+  const formData = new FormData(e.target);
+  formData.append("clientEmail", email);
 
-      document.getElementById("uploadBtn").addEventListener("click", () => {
-        uploadDocument(clientId);
-      });
-    });
+  const res = await fetch("/api/client/upload", {
+    method: "POST",
+    body: formData
+  });
 
-    async function uploadDocument(clientId) {
-      const fileInput = document.getElementById("uploadFile");
-      const statusEl = document.getElementById("uploadStatus");
+  const data = await res.json();
 
-      if (!fileInput.files.length) {
-        statusEl.textContent = "Please choose a file.";
-        return;
-      }
+  if (!data.success) {
+    msg.textContent = "Upload failed.";
+    msg.style.color = "red";
+    return;
+  }
 
-      const file = fileInput.files[0];
-      const formData = new FormData();
-      formData.append("file", file);
+  msg.textContent = "Upload successful.";
+  msg.style.color = "green";
 
-      try {
-        const res = await fetch(`${API_BASE}/clients/${clientId}/upload`, {
-          method: "POST",
-          body: formData
-        });
-
-        const data = await res.json();
-
-        if (!data.success) {
-          statusEl.textContent = data.error || "Upload failed.";
-          return;
-        }
-
-        statusEl.textContent = "File uploaded successfully.";
-        fileInput.value = "";
-
-      } catch {
-        statusEl.textContent = "Unable to upload file right now.";
-      }
-    }
-  </script>
+  setTimeout(() => window.location.href = "client-documents.html", 800);
+});
+</script>
 
 </body>
 </html>
